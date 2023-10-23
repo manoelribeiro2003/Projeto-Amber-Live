@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário BroCode</title>
+</head>
+<body>
+    <form action="table.html" method="get">
+    <table border="1">
+        <th colspan="5">DADOS PESSOAIS</th>			
+            <tr>
+                <td>Nome:</td>  <td><input type="text"></td>    <td>Usuário:</td>   <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Email:</td> <td><input type="text"></td> <td>Senha:</td> <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>Cpf (sem pontos):</td> <td><input type="text"></td>
+            </tr>		
+            <tr>
+                <td>Genêro:</td>    <td><input type="radio" name="genero">Masculino</td>    <td><input type="radio" name="genero">Femenino</td> <td><input type="radio" name="genero">Outros</td>
+            </tr>
+            <tr>
+                <td>Data de nascimento:</td>    <td><input type="date"></td>
+            </tr>
+            	
+                
+        <th colspan="5">DADOS EDUCACIONAIS</th>			
+            <tr>
+                <td>Idiomas:</td>   <td><input type="checkbox" name="idiomas">Português</input></td>   <td><input type="checkbox" name="idiomas">Inglês</input></td>  <td><input type="checkbox" name="idiomas">Espanhol</input></td>    <td><input type="checkbox" name="idiomas">Outros</input></td>
+            </tr>
+            <tr><td>Escolaridade	<escolaridade></escolaridade></td></tr>			
+            
+        <th colspan="5">ENDEREÇO</th>			
+            <tr>
+                <td>Cidade:</td> <td><input type="text" name="cidade"></input></td> <td>Bairro:</td>    <td><input type="text" name="bairro"></input>
+            </tr>	
+            <tr>
+                <td>CEP:</td>   <td><input type="text" name="cep"></input></td> <td>Rua:</td> <td><input type="text" name="rua"></input>
+            </tr>	
+            <tr>
+                <td>Ponto de referência:</td> <td><input type="text" name="referencia"></input></td>
+            </tr>			
+            <tr>
+                <td><input type="checkbox" name="apartamento"></input>Vive em apartamento?</td> <td>Número do apartamento:</td> <td><input type="number" name="num_apartamento"></input></td>
+            </tr>		
+            			
+        
+        <th colspan="5">AVALIAÇÃO</th>				
+            <tr>
+                <td colspan="5" >Escreva abaixo como você avalia o canal BroCode:</td>
+            </tr>
+            <tr>
+                <td colspan="5"><input type="text" name="avaliacao"></input></td>
+            </tr>				
+            <tr>
+                <td colspan="2">Você recomenda o canal BroCode à outras pessoas?</td>   <td><input type="radio" name="opcao">sim</td>   <td><input type="radio" name="opcao">nao</td>
+            </tr>	
+            <tr>
+                <td colspan="5">Quais os conteúdos que você estudou no canal BroCode? Escreva abaixo:</td>
+            </tr>				
+            <tr>
+                <td colspan="5"><input type="text" name="conteudos"></input></td>
+            </tr>	
+            <tr>
+                <td><input type="submit" value="Enviar"></td>
+            </tr>			
+    </table>
+    </form>
+</body>
+</html>

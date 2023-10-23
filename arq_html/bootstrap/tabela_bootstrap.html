@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Tabela com Bootstrap</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+
+    <!--Icones-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!--o Bootstrap requer um elemento contendo para agrupar o conteúdo do site-->
+    <!--Os contêineres são usados ​​para preencher o conteúdo dentro deles-->
+
+    <!--Um card é uma caixa com bordas e algum preenchimento em torno de seu conteúdo.-->
+
+    <!--bg-dark background preto da tabela-->
+    <!--p-3 padding de 3-->
+    <!--mt-3 margin top de 3-->
+
+    <!-- border - borda ja no padrão bootstrap -->
+    <!-- border-warning - borda na cor warning (amarelo) -->
+    <!--classe table - tabela ja no padrao bootstrap-->
+    <!-- tr - table row -->
+    <!-- th - table head -->
+    <!-- thead - cabeçalho da tabela -->
+    <!-- tbody - corpo da tabela -->
+    <!--table-striped deixa listrado-->
+    <!--table-hover da uma sensação hover-->
+    <!--table-sm deixa tamanho small-->
+
+    <div class="container card mt-3 p-2 bg-dark">
+        <table class="table table-light table-striped table-hover table-sm table-bordered border border-warning">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Firt</th>
+                    <th>Last</th>
+                    <th>Handle</th>
+                    <th colspan="2">Icons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><!--class="table-primary" -> é possível ambém aplicar a cor em uma linha específica-->
+                    <th><button class="btn btn-primary fa fa-rocket"></button></th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td><button class="btn btn-success fa fa-code"></button></td>
+                    <td><button class="btn fas fa-barcode"></button></td>
+                </tr>
+                <tr>
+                    <th><button class="btn fa fa-hand"></button></th>
+                    <td>Jacob</td><!--class="table-primary"--><!--ou em uma célula específica-->
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td><button class="btn 	fas fa-football-ball"></button></td>
+                    <td><button class="btn fa fa-skull-crossbones"></button></td>
+                </tr>
+                <tr>
+                    <th><button class="btn btn-warning fa fa-pencil"></th>
+                    <td>Larry</th>
+                    <td>the bird</th>
+                    <td>@twitter</th>
+                    <td><button class="btn fa fa-dragon"></button></td>
+                    <td><button class="btn fa fa-folder-open"></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

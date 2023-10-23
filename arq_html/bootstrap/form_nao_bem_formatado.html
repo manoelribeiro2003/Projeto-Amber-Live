@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com Bootstrap</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+</head>
+<body>
+    <form action="table.html" method="get">
+        <div class="form-group col-md-6">
+            <label>Email</label> 
+
+        </div>
+        <label class="label">Dados Pessoais</label>
+                Nome: <input type="text" >
+                Email: <input type="text" >
+                Senha: <input type="password" ><br>
+                Cpf (sem pontos): 
+                    <input type="text" maxlength="11" minlength="11"> <!--maxlentgh e minlenght = indica o máximo e mínimo de caracteres a serem digitados-->
+                <br>
+                Genêro:
+                    <input type="radio" name="genero" value="masculino" checked> Masculino<!--checked = checkado por padrão -->
+                    <input type="radio" name="genero" value="femenino"> Femenino <!--type= indica o tipo de valor a ser recebido-->
+                    <input type="radio" name="genero" value="outros">Outros <!--name=  indica o grupo do radiobox-->
+                    <!--value= especifica-se o texto que será lido pelo leitor-->
+                    <br>
+                Data de nascimento: <input type="date" name="data_de_nascimento" id="data_de_nascimento" data="selecione uma data"> Data de nascimento
+        <fieldset>
+            <legend>Dados educacionais</legend>
+                Idiomas: 
+                    <input type="checkbox" name="idiomas" value="portugues"> Português
+                    <input type="checkbox" name="idiomas" value="ingles"> Inglês
+                    <input type="checkbox" name="idiomas" value="espanhol"> Espanhol
+                    <input type="checkbox" name="idiomas" value="outros"> Outros <br>
+                Escolaridade: 
+                    <!-- <select> = Cria uma lista no estilo drop-down-->
+                    <select name="escolaridade" id="escolaridade"> <!--id="" = necessário para referenciar a lista drop-down com um label-->
+                        <!--name= definir a função que o vincula às consultas-->
+                        <option value="EF1">Ensino Fundamental 1</option>
+                        <option value="EF2">Ensino Fundamental 2</option>
+                        <option value="EM">Ensino Médio</option>
+                        <option value="ES" >Ensino Superior</option>
+                        <!-- <tag>*<numero> = repete uma tag tanto de vezes -->
+                    </select>
+        </fieldset>
+        <fieldset>
+            <legend>Endereço:</legend>
+                Cidade:<input type="text">
+                Bairro:<input type="text">
+                Rua:<input type="text">
+                CEP:<input type="text">
+                <br>
+                Local de referência:<input type="text">
+                <br>
+                <input type="checkbox"> Apartamento?
+                Número do apartamento:<input type="text" disabled>
+        </fieldset>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>

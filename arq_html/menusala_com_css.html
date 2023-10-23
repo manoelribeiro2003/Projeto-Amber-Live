@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Sala</title>
+    <style>
+        .menu{
+            list-style: none; /*estilo da lista - remove os pontos*/
+            border: 1px solid #c0c0c0;
+            float: left; /*posicionamento do menu*/
+        }
+        .menu li{
+            position: relative;
+            float: left;
+            border-right: 1px solid #c0c0c0;
+        }
+        .menu li ul{
+            position: absolute;/*ele é relativo ao tamanho de pixels*/
+            background-color: #fff;
+            top: 25px;
+            display: none;
+        }
+        .menu li:hover ul{
+            display: block;
+        }
+        .menu li:hover ul li{
+            border: 1px solid #c0c0c0;
+            display: block;
+            width: 150px;
+        }
+        .menu li a{
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: block;
+        }
+        .menu li a:hover{
+            background: #333;
+            color: white;
+            text-shadow: 0px 0px 5px white;
+        }
+    </style>
+</head>
+<body>
+    <ul class="menu">
+        <li><a target="_blank" href="C:\Users\Aluno\Documents\Turma 047\Curso FullStack-20230927T111929Z-001\Curso FullStack\arq_html\form_(19_09).html">Home</a></li>
+        <li><a target="_blank" href="C:\Users\Aluno\Documents\Turma 047\Curso FullStack-20230927T111929Z-001\Curso FullStack\arq_html\form2_(25_09).html">Sobre</a></li>
+        <li><a href="#">O que fazemos?</a>
+            <ul>
+                <li><a target="_blank" href="C:\Users\Aluno\Documents\Turma 047\Curso FullStack-20230927T111929Z-001\Curso FullStack\arq_html\HelloWorld_(13_09).html">Web Design</a></li>
+                <li><a target="_blank" href="C:\Users\Aluno\Documents\Turma 047\Curso FullStack-20230927T111929Z-001\Curso FullStack\arq_html\img_a_ul_(14_09).html">SEO</a></li>
+                <li><a target="_blank" href="C:\Users\Aluno\Documents\Turma 047\Curso FullStack-20230927T111929Z-001\Curso FullStack\arq_html\ProjetoSite_(20_09).html">Design</a></li>
+            </ul>
+        </li>
+        <li><a target="_blank" href="C:\Users\Aluno\Documents\Turma 047\Curso FullStack-20230927T111929Z-001\Curso FullStack\arq_html\projetoSite.html">Links</a></li>
+        <li><a target="_blank" href="C:\Users\Aluno\Documents\Turma 047\Curso FullStack-20230927T111929Z-001\Curso FullStack\arq_html\table.html">Contato</a></li>
+    </ul>
+</body>
+</html>

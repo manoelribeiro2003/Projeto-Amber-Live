@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juros Simples</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <form id="calculo">
+        <div class="container card mt-3 p-3 form-group">
+            <h2>CALCULADORA DE JUROS SIMPLES</h2>
+            <label>Digite o valor do capital: </label>
+            <input class="form-control" type="text" name="capital" id="Capital">
+            <label>Digite o valor da taxa: </label>
+            <input class="form-control" type="text" name="taxa" id="Taxa">
+            <label>Digite o valor do tempo: </label>
+            <input class="form-control" type="text" name="tempo" id="Tempo"><br>
+            <input type="submit" value="Calcular" class="btn btn-primary"><br>
+            O valor do juros é:
+            <input class="form-control mt-3" type="text" id="Total"></input>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('calculo').onsubmit = function () {
+            var n1 = document.getElementById("Capital").value;
+            var n2 = document.getElementById("Taxa").value;
+            var n3 = document.getElementById("Tempo").value;
+            var total = parseFloat(n1 * (n2 / 100) * n3);
+            document.getElementById("Total").value = total;
+            return false;
+        }
+
+
+    </script>
+</body>
+
+</html>
