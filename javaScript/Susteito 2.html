@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suspeito 2</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <form id="enviar" class="container p-4">
+
+        <img id="imagem" style="width: 120px;" src="https://images.emojiterra.com/twitter/512px/1f9d0.png" alt="">
+        Responda as perguntas abaixo:
+
+        <div class="form-group form-check">
+            <input name="botao" type="checkbox" class="form-check-input" id="telefonou" onclick="return isChecked()">
+            <label class="form-check-label" for="telefonou">Telefonou para a vítima? </label>
+        </div>
+
+        <div class="form-group form-check">
+            <input name="botao" type="checkbox" class="form-check-input" id="esteve" onclick="return isChecked()">
+            <label class="form-check-label" for="esteve">Esteve no local do crime </label>
+        </div>
+
+        <div class="form-group form-check">
+            <input name="botao" type="checkbox" class="form-check-input" id="mora" onclick="return isChecked()">
+            <label class="form-check-label" for="mora">Mora perto da vitima </label>
+        </div>
+
+        <div class="form-group form-check">
+            <input name="botao" type="checkbox" class="form-check-input" id="devia" onclick="return isChecked()">
+            <label class="form-check-label" for="devia">Devia para a vítima </label>
+        </div>
+
+        <div class="form-group form-check">
+            <input name="botao" type="checkbox" class="form-check-input" id="trabalhou" onclick="return isChecked()">
+            <label class="form-check-label" for="trabalhou">Ja trabalhou com a vitima </label>
+        </div>
+
+        <div>
+            <label>Sua participação: </label>
+            <label class="pb-2" id="participacao">a definir</label>
+        </div>
+
+        <button id="botaoEnviar" type="submit" class="btn btn-primary" onclick="return enviar()">Enviar</button>
+
+    </form>
+    <script>
+
+        participacao = 0;
+
+        function isChecked() {
+            checkbox = document.getElementsByName('botao');
+            for (let i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].checked) {
+                    participacao++;
+                }else{
+                    participacao--;
+                }
+            }
+        }
+
+        function enviar() {
+            if (participacao == 2) {
+                document.getElementById('participacao').innerHTML = 'Suspeito!'
+                document.getElementById('imagem').src = 'https://static.vecteezy.com/system/resources/previews/010/252/117/non_2x/suspicious-or-cautious-emojis-file-png.png'
+
+            } else if (participacao >= 3 && participacao <= 4) {
+                document.getElementById('participacao').innerHTML = 'Cumplice!'
+                document.getElementById('imagem').src = 'https://images.emojiterra.com/google/android-11/512px/1f62f.png'
+
+            } else if (participacao == 5) {
+                document.getElementById('participacao').innerHTML = 'Assassino!'
+                document.getElementById('imagem').src = 'https://img.freepik.com/vetores-premium/emoticon-de-alta-qualidade-emoji-rosto-vermelho-irritado-emoticon-bonito-icone-emoji-isolado-do-facebook-app_661108-6628.jpg?w=2000'
+
+            } else if (participacao < 2) {
+                document.getElementById('participacao').innerHTML = 'Inocente!'
+                document.getElementById('imagem').src = 'https://i.pinimg.com/474x/7a/50/6c/7a506c3b52e619fdc469ad8e931497c0.jpg'
+            }
+            return false;
+        }
+
+    </script>
+</body>
+
+</html>

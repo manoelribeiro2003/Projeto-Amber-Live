@@ -1,0 +1,10 @@
+01. <p></p>             (04) negrito
+02. <h1> a <h6>         (08) título da aba
+03. <!---->             (01) paragrafo
+04. <b></b>             (05) itálico
+05. <i></i>             (07) corpo do site
+06. <u></u>             (10) inicia os códigos html
+07. <body></body>       (09) cabeçalho de configuração
+08. <title></title>     (02) título de texto
+09. <head></head>       (03) comentário
+10. <html></html>       (06) sublinhado

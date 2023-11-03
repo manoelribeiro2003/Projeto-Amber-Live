@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            width: 90%;
+            
+        }
+        table, td, th{
+            text-align: center;
+            border: 2px solid green;
+            border-collapse: collapse; /* Tirar linhas duplicadas */
+            padding: 7px;
+            margin: auto;
+        }
+        p{
+            text-align: center;
+        }
+        a{
+            color: brown;
+            text-decoration:none;
+        }
+        p.rodape{
+            text-align: right;
+        }
+        td:hover{ /*Destacar quando passar o mouse*/
+            color: aqua;
+            background-color: linear-gradient(red, yellow);
+        }
+        body{
+            /* background-image: url("C:\\Users\\Aluno\\Documents\\Turma 047\\Arquivos\\fotos\\papel-de-um-fullstack-scaled.jpg");*/
+            background-size: cover;
+            background-repeat: no-repeat;
+            padding: 2%; /*Todo o conteudo dentro de body terá uma distancia da borda de 2%*/
+            background-image: linear-gradient(to bottom, red , yellow);
+        }
+    </style>
+</head>
+<body>
+    <!-- <table> indica que é uma tabela -->
+    <table>
+        <tr> <!-- colspan="<numero de celulas a serem mescladas>" -->
+           <th colspan="5">Verbos em Inglês</th>
+        </tr>
+        <tr>
+            <!-- <th> indica o cabeçalho das colunas -->
+            <th>País</th>
+            <th>Infinitivo</th>
+            <th>Presente</th>
+            <th>Passado</th>
+            <th>Link</th>
+        </tr>
+        <tr>
+            <!-- <td> indica as colunas -->
+            <td><img src="C:\Users\Aluno\Documents\Turma 047\Arquivos\fotos\united-states-america_323310.png" alt="Foto USA"></td>
+            <td>Be</td>
+            <td>am, are, is</td>
+            <td>was, were</td>
+            <td><a href="https://www.wizard.com.br/idiomas/tabela-de-verbos-irregulares-em-ingles/"target="_blank">Tabela de verbos</a></td>
+        </tr>
+        <tr>
+            <td><img src="C:\Users\Aluno\Documents\Turma 047\Arquivos\fotos\brazil-flag_3909370.png" alt="Foto BRASIL"></td>
+            <td>Ser</td>
+            <td>sou, são, é</td>
+            <td>era, eram</td>
+            <td><a href="https://www.todamateria.com.br/tempos-verbais-no-ingles/" target="_blank">Tempos verbais</a></td>
+        </tr>
+    </table>
+    <!-- <strong> faz a mesma função que <b>-->
+    <p>Os <strong>tempos verbais</strong> referem-se à habilidade de situar as palavras no tempo, seja agora, antes ou mais tarde.
+        Já os <q>aspectos verbais</q> estão relacionados a ações ou estados ligados ao tempo.
+        <!-- <q> = quote. Põe aspas -->
+    </p>
+    <p class="rodape"> 
+    <small>Fonte: Site <a href="https://www.berlitz.com/pt-br/blog/tempos-verbais-em-ingles" target="_blank">Berlitz</a></small>
+    </p>
+    <!--<small> deixa a fonte pequena-->
+</body>
+</html>
