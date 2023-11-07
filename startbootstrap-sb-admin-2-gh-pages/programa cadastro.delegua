@@ -1,0 +1,21 @@
+var alunos = {
+  "nome": "João", 
+  "cep": "1234", 
+  "telefone": 987654, 
+  "nome da mãe" : "Mãe do João"
+}
+escreva (alunos["nome"])
+var cep, telefone, rg
+var nome, nomeDoPai, nomeDaMae, sexo, endereco, cidade, estado, data, grauDeEscolaridade
+nome = alunos["nome"]
+nomeDoPai = "pai do João"
+nomeDaMae = alunos["nome da mãe"]
+cep = alunos["cep"]
+telefone = alunos["telefone"]
+rg = 123
+escreva ("O  nome é: ", nome)
+escreva ("O nome do pai é: ", nomeDoPai)
+escreva ("O nome da mãe é: ", nomeDaMae)
+escreva ("O  cep é: ", cep)
+escreva ("O  telefone é: ", telefone)
+escreva ("O  rg é: ", rg)
