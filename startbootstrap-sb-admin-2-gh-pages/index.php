@@ -1,11 +1,5 @@
 <?php
-$conn = new MySqli('localhost', 'root', '', 'amber_live');
-if ($conn->connect_error) {
-    die("Conection failed: " . $conn->connect_error);
-} else {
-    echo ('A conexão ao bd foi estabelecida');
-}
-echo("");
+include_once('../startbootstrap-sb-admin-2-gh-pages/php/conexao.php')
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
