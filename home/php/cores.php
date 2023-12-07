@@ -8,5 +8,8 @@ function red($text){
 function black($text){
     return "<span style='color:black;'>$text</span>";
 }
+function blue($text){
+    return "<span style='color:blue;'>$text</span>";
+}
 
 ?>
