@@ -1,6 +1,18 @@
 <?php
 
+include_once('./php/conexao.php');
+include_once('./php/cores.php');
+
+$email = $_POST['email'];
+$senha = $_POST['senha'];
+
+$sql_select = "SELECT * FROM streamers WHERE email = '$email'";
+$result = $conn->query($sql_select);
+
+session_start();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -12,13 +24,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -44,15 +54,24 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
                                     </div>
-                                    <form  action='./verificacao.php' method="POST" >
+                                    <?php if ($result->num_rows == 0) {
+                                        echo (' <div class="text-center">
+                                                    <h5 class="h4 text-gray-900 mb-4">'.red('Não encontrado email!')).'</h1>
+                                                </div>';
+                                    } else {
+                                        $_SESSION['logado'] = '1';
+                                        $_SESSION['email'] = $email;
+                                        header('Location:./index.php');
+                                    } ?>
+                                    <div class="text-center">
+                                        <h5 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
+                                    </div>
+                                    <form action='' method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp" name="email"
-                                                placeholder="Digite seu email...">
+                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" name="email" placeholder="Digite seu email...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Senha" name="senha">
+                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Senha" name="senha">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -62,8 +81,8 @@
                                             </div>
                                         </div>
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Entrar">
-                                    
-                                        
+
+
                                         <!-- <hr> -->
                                         <!-- <a href="./index.php" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
