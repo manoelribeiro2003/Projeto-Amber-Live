@@ -10,11 +10,12 @@ if (isset($_SESSION['logado'])) {
         $sql = "SELECT name FROM streamers WHERE email = '$email'";
         $resultado = $conn->query($sql);
         $linha = mysqli_fetch_array($resultado);
-    } elseif ($_SESSION['logado'] == '0') {
-        echo (red("Não logado"));
+    // } elseif ($_SESSION['logado'] == '0') {
+    //     echo (red("Não logado"));
     }
 }else {
-    # code...
+    $_SESSION['logado'] = '0';
+    echo (red("Não logado"));
 }
 ?>
 <!DOCTYPE html>
