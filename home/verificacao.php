@@ -12,12 +12,12 @@ $result = $conn->query($sql_select);
 session_start();
 if ($result->num_rows == 0) {
     echo(red('Não encontrado email!'));
-    $_SESSION['logado'] = '0';
+    $_SESSION['logado'] = FALSE;
     $_SESSION['email'] = $email;
     header('Location:./index.php');
 }else{
     echo(green('Encontrado email!'));
-    $_SESSION['logado'] = '1';
+    $_SESSION['logado'] = TRUE;
     $_SESSION['email'] = $email;
     header('Location:./index.php');
 

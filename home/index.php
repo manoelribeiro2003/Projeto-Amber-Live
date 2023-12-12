@@ -3,7 +3,7 @@ include_once('./php/conexao.php');
 // include_once('./verificacao.php');
 session_start();
 if (isset($_SESSION['logado'])) {
-    if ($_SESSION['logado'] == '1') {
+    if ($_SESSION['logado'] == TRUE) {
 
         echo (blue("Logado"));
         $email = $_SESSION['email'];
@@ -14,7 +14,7 @@ if (isset($_SESSION['logado'])) {
     //     echo (red("Não logado"));
     }
 }else {
-    $_SESSION['logado'] = '0';
+    $_SESSION['logado'] = FALSE;
     echo (red("Não logado"));
 }
 ?>
