@@ -1,28 +1,24 @@
 function V_email(campo) {
     if (campo.value.trim() == '') {
-        p = document.getElementById("exampleInputEmail").innerHTML = '*Campo obrigatório';
-        document.getElementById("exampleInputEmail").style.color = 'red';
-    } else if (campo.value < 0) {
-        document.getElementById("exampleInputEmail").innerHTML = '* O valor não pode ser negativo';
-        document.getElementById("exampleInputEmail").style.color = 'red';
-        campo.value = "";
-        campo.focus();
+        p = document.getElementById("alertaEmail").innerHTML = '*Campo obrigatório';
+        document.getElementById("alertaEmail").style.color = 'red';
     } else {
-        document.getElementById("exampleInputEmail").innerHTML = '';
+        document.getElementById("alertaEmail").innerHTML = '';
     }
 }
 
 function V_senha(campo) {
     if (campo.value.trim() == '') {
-        p = document.getElementById("alertaQuantidade").innerHTML = '*Campo obrigatório';
-        document.getElementById("alertaQuantidade").style.color = 'red';
-    }
-    else if (campo.value < 0) {
-        document.getElementById("alertaQuantidade").innerHTML = '* A quantidade não pode ser negativa';
-        document.getElementById("alertaQuantidade").style.color = 'red';
-        campo.value = "";
-        campo.focus();
+        p = document.getElementById("alertaSenha").innerHTML = '*Campo obrigatório';
+        document.getElementById("alertaSenha").style.color = 'red';
     } else {
-        document.getElementById("alertaQuantidade").innerHTML = '';
+        document.getElementById("alertaSenha").innerHTML = '';
     }
+}
+
+function V_cadastrar() {
+    p = document.getElementById("alertaEmail");
+    v = document.getElementById("alertaSenha");
+    V_email(p);
+    V_valor(v);
 }
