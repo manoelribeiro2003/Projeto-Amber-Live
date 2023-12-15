@@ -2,8 +2,8 @@
 session_start();
 
 if(isset($_SESSION['logado'])){
-    if($_SESSION['logado'] == '1'){
-        session_destroy();
+    if($_SESSION['logado'] == TRUE){
+        $_SESSION['logado'] = FALSE;
         header('Location:./login.php');
     }
 }

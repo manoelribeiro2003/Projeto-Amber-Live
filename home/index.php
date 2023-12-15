@@ -3,19 +3,16 @@ include_once('./php/conexao.php');
 // include_once('./verificacao.php');
 session_start();
 if (isset($_SESSION['logado'])) {
-    if ($_SESSION['logado'] == TRUE) {
-
-        echo (blue("Logado"));
+    if ($_SESSION['logado'] === 'naoEncontrado') {
+        $_SESSION['logado'] = FALSE;
+    }elseif ($_SESSION['logado'] == TRUE) {
         $email = $_SESSION['email'];
         $sql = "SELECT name FROM streamers WHERE email = '$email'";
         $resultado = $conn->query($sql);
         $linha = mysqli_fetch_array($resultado);
-    // } elseif ($_SESSION['logado'] == '0') {
-    //     echo (red("Não logado"));
     }
 }else {
     $_SESSION['logado'] = FALSE;
-    echo (red("Não logado"));
 }
 ?>
 <!DOCTYPE html>

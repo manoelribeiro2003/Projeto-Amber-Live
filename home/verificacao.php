@@ -6,17 +6,14 @@ include_once('./php/cores.php');
 $email = $_POST['email'];
 $senha = $_POST['senha'];
 
-$sql_select = "SELECT * FROM streamers WHERE email = '$email'";
+$sql_select = "SELECT * FROM streamers WHERE email = '$email' AND senha = '$senha'";
 $result = $conn->query($sql_select);
 
 session_start();
 if ($result->num_rows == 0) {
-    echo(red('Não encontrado email!'));
-    $_SESSION['logado'] = FALSE;
-    $_SESSION['email'] = $email;
-    header('Location:./index.php');
+    $_SESSION['logado'] = 'naoEncontrado';
+    header('Location:./login.php');
 }else{
-    echo(green('Encontrado email!'));
     $_SESSION['logado'] = TRUE;
     $_SESSION['email'] = $email;
     header('Location:./index.php');
