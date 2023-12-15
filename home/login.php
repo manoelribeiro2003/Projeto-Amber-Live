@@ -1,3 +1,17 @@
+<?php
+
+session_start();
+if (isset($_SESSION['logado'])) {
+    if ($_SESSION['logado'] === TRUE) {
+        header('Location:./index.php');
+        
+    }
+} else {
+    $_SESSION['logado'] = 'naoEncontrado';
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -28,7 +42,7 @@
             background-image: radial-gradient(circle, yellow, red);
         }
     </style>
-    
+
 
 </head>
 
@@ -51,8 +65,20 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
                                     </div>
-                                    
-                                    <form action='' method="POST">
+                                    <?php
+                                    if ($_SESSION['logado'] == 'naoEncontrado') {
+                                        echo ('
+                                        <div class="text-center">
+                                            <label style="color: red;" class="form-text">Email ou senha incorretos</label>
+                                        </div>
+                                        ');
+                                    } elseif ($_SESSION['logado'] == FALSE) {
+                                        echo ('');
+                                    }
+                                    ?>
+
+
+                                    <form action='./verificacao.php' method="POST">
                                         <div class="form-group">
                                             <input onblur="V_email(this)" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" name="email" placeholder="Digite seu email..." required>
                                             <div name="alertaEmail" id="alertaEmail" class="form-text"></div>
