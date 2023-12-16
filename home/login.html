@@ -1,3 +1,20 @@
+<<<<<<< HEAD:home/login.html
+=======
+<?php
+
+session_start();
+if (isset($_SESSION['logado'])) {
+    if ($_SESSION['logado'] === TRUE) {
+        header('Location:./index.php');
+        
+    }
+} else {
+    $_SESSION['logado'] = 'naoEncontrado';
+}
+
+?>
+
+>>>>>>> b14cc3791e99a905381bcac88623210d4d7bf8b1:home/login.php
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,20 +26,30 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!--<style>
+       body{
+            background-color: linear-gradient(tobottom right, rgb(210, 7, 7),rgba(240, 240, 240, 0.546),rgb(221, 116, 4));
+          }
+    </style>-->
+    <style>
+        .grad {
+            background-image: radial-gradient(circle, yellow, red);
+        }
+    </style>
+
+
 </head>
 
-<body class="bg-gradient-primary">
+<body class="grad">
 
     <div class="container">
 
@@ -35,32 +62,43 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-4 d-none d-lg-block "><img src="../imagens/amber.gif" width="400" height="400"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
                                     </div>
-                                    <form  action='./verificacao.php' method="POST" >
+                                    <?php
+                                    if ($_SESSION['logado'] == 'naoEncontrado') {
+                                        echo ('
+                                        <div class="text-center">
+                                            <label style="color: red;" class="form-text">Email ou senha incorretos</label>
+                                        </div>
+                                        ');
+                                    } elseif ($_SESSION['logado'] == FALSE) {
+                                        echo ('');
+                                    }
+                                    ?>
+
+
+                                    <form action='./verificacao.php' method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp" name="email"
-                                                placeholder="Digite seu email...">
+                                            <input onblur="V_email(this)" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" name="email" placeholder="Digite seu email..." required>
+                                            <div name="alertaEmail" id="alertaEmail" class="form-text"></div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Senha" name="senha">
+                                            <input onblur="V_senha(this)" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Senha" name="senha" required>
+                                            <div id="alertaSenha" class="form-text"></div>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                                <label class="custom-control-label" for="customCheck">Lembrar Credenciais</label>
                                             </div>
                                         </div>
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Entrar">
-                                    
-                                        
+
+
                                         <!-- <hr> -->
                                         <!-- <a href="./index.php" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
@@ -71,10 +109,10 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="forgot-password.html">Esqueceu a senha?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="register.html">Crie uma conta!</a>
                                     </div>
                                 </div>
                             </div>
@@ -89,6 +127,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+    <script src="./campos_obrigatorios.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

@@ -3,16 +3,16 @@ include_once('./php/conexao.php');
 // include_once('./verificacao.php');
 session_start();
 if (isset($_SESSION['logado'])) {
-    if ($_SESSION['logado'] == '1') {
-
-        echo (blue("Logado"));
+    if ($_SESSION['logado'] === 'naoEncontrado') {
+        $_SESSION['logado'] = FALSE;
+    }elseif ($_SESSION['logado'] == TRUE) {
         $email = $_SESSION['email'];
         $sql = "SELECT name FROM streamers WHERE email = '$email'";
         $resultado = $conn->query($sql);
         $linha = mysqli_fetch_array($resultado);
-    } elseif ($_SESSION['logado'] == '0') {
-        echo (red("Não logado"));
     }
+}else {
+    $_SESSION['logado'] = FALSE;
 }
 ?>
 <!DOCTYPE html>
@@ -323,14 +323,18 @@ if (isset($_SESSION['logado'])) {
                                             Lojinha
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                        <a class="dropdown-item" href="./logout.php" data-toggle="modal" data-target="#logoutModal">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Sair
                                         </a>
                                         ');
                                 }else {
                                     echo('
+<<<<<<< HEAD
                                         <a class="dropdown-item" href="./register.html">
+=======
+                                        <a class="dropdown-item" href="register.html">
+>>>>>>> b14cc3791e99a905381bcac88623210d4d7bf8b1
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Criar Conta
                                         </a>
@@ -459,7 +463,7 @@ if (isset($_SESSION['logado'])) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="./logout.php">Logout</a>
                 </div>
             </div>
         </div>

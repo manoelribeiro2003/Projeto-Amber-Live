@@ -20,9 +20,15 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <style>
+        .grad {
+            background-image: radial-gradient(circle, yellow, red);
+        }
+    </style>
+
 </head>
 
-<body class="bg-gradient-primary">
+<body class="grad">
 
     <div class="container">
 
@@ -30,7 +36,7 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-4 d-none d-lg-block "><img src="../imagens/Pin-HappyAnim.gif" width="400" height="400"></div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -61,7 +67,7 @@
                                             id="exampleRepeatPassword" placeholder="Repeat Password">
                                     </div>
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                <a href="login.php" class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </a>
                                 <hr>
@@ -77,7 +83,7 @@
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                                <a class="small" href="./login.php">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
