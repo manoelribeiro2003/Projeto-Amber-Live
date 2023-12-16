@@ -330,11 +330,11 @@ if (isset($_SESSION['logado'])) {
                                         ');
                                 }else {
                                     echo('
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="./register.html">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Criar Conta
                                         </a>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="./login.php">
                                             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Entrar
                                         </a>
