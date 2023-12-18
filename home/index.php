@@ -330,11 +330,7 @@ if (isset($_SESSION['logado'])) {
                                         ');
                                 }else {
                                     echo('
-<<<<<<< HEAD
                                         <a class="dropdown-item" href="./register.html">
-=======
-                                        <a class="dropdown-item" href="register.html">
->>>>>>> b14cc3791e99a905381bcac88623210d4d7bf8b1
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Criar Conta
                                         </a>

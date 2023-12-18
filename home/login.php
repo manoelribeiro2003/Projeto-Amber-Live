@@ -1,5 +1,3 @@
-<<<<<<< HEAD:home/login.html
-=======
 <?php
 
 session_start();
@@ -14,7 +12,6 @@ if (isset($_SESSION['logado'])) {
 
 ?>
 
->>>>>>> b14cc3791e99a905381bcac88623210d4d7bf8b1:home/login.php
 <!DOCTYPE html>
 <html lang="pt-br">
 
