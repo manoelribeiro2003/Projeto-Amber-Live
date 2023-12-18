@@ -74,7 +74,7 @@ if (isset($_SESSION['logado'])) {
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="gaules.php">
                     <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
                     <span>Gaules</span>
                 </a>
@@ -82,7 +82,7 @@ if (isset($_SESSION['logado'])) {
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="alanzoka.php">
                     <img style="width: 30px; border-radius: 15px;" src="../imagens/alanzika.jpg" alt="">
                     <span>Alanzoka</span>
                 </a>

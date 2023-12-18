@@ -1,3 +1,21 @@
+
+<?php
+include_once('./php/conexao.php');
+// include_once('./verificacao.php');
+session_start();
+if (isset($_SESSION['logado'])) {
+    if ($_SESSION['logado'] === 'naoEncontrado') {
+        $_SESSION['logado'] = FALSE;
+    }elseif ($_SESSION['logado'] == TRUE) {
+        $email = $_SESSION['email'];
+        $sql = "SELECT name FROM streamers WHERE email = '$email'";
+        $resultado = $conn->query($sql);
+        $linha = mysqli_fetch_array($resultado);
+    }
+}else {
+    $_SESSION['logado'] = FALSE;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,14 +26,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="../imagens/Pin-Happy.png">
 
-    <title>SB Admin 2 - Color Utilities</title>
+    <title>Amber Live</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -28,24 +45,24 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-image: linear-gradient(red, yellow);">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="./index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <img style="height: 50px;" src="../imagens/Pin-Happy.png" alt="">
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Amber Live</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item active">
+                <a class="nav-link" href="./index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Lives</span></a>
             </li>
 
             <!-- Divider -->
@@ -53,42 +70,23 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Streamers Online
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                <a class="nav-link collapsed" href="./streamers/gaules.html">
+                    <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
+                    <span>Gaules</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="./streamers/alanzoka.html">
+                    <img style="width: 30px; border-radius: 15px;" src="../imagens/alanzika.jpg" alt="">
+                    <span>Alanzoka</span>
                 </a>
-                <div id="collapseUtilities" class="collapse show" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item active" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
             </li>
 
             <!-- Divider -->
@@ -96,42 +94,28 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                Streamers Offline
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
+                <a class="nav-link" href="#">
+                    <img style="width: 30px; border-radius: 15px;" src="../imagens/quackity.png" alt="">
+                    <span>Quackity</span></a>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link" href="#">
+                    <img style="width: 30px; border-radius: 15px;" src="../imagens/joaogameplays.jpg" alt="">
+                    <span>Joao Gameplays</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                <a class="nav-link" href="#">
+                    <img style="width: 30px; border-radius: 15px;" src="../imagens/enzoCraft.jpg" alt="">
+                    <span>EnzoCraft</span></a>
             </li>
 
             <!-- Divider -->
@@ -141,6 +125,8 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -160,11 +146,9 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -178,18 +162,14 @@
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -202,17 +182,15 @@
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                <h6 style="background-color: rgb(255, 153, 51);" class="dropdown-header">
+                                    Notificações
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
@@ -253,22 +231,19 @@
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                                <h6 style="background-color: rgb(255, 153, 51);" class="dropdown-header">
+                                    Mensagens
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -279,8 +254,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -291,8 +265,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -303,8 +276,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -321,32 +293,72 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                            <?php isset($linha) ? $logado = TRUE : $logado = FALSE; ?>
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php
+                                    if ($logado) {
+                                        echo ($linha['name']);
+                                    } else {
+                                        echo ('Acessar');
+                                    }
+                                    ?>
+                                </span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <?php
+                                if ($logado) {
+                                    echo ('
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Perfil
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Configurações
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Lojinha
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="./logout.php" data-toggle="modal" data-target="#logoutModal">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Sair
+                                        </a>
+                                        ');
+                                }else {
+                                    echo('
+                                        <a class="dropdown-item" href="register.html">
+                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Criar Conta
+                                        </a>
+                                        <a class="dropdown-item" href="./login.php">
+                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Entrar
+                                        </a>
+                                        ');
+                                }
+                                ?>
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Configurações
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Lojinha
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                    Sair
+                                </a> -->
                             </div>
                         </li>
 
@@ -359,96 +371,47 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Color Utilities</h1>
-                    <p class="mb-4">Bootstrap's default utility classes can be found on the official <a
-                            href="https://getbootstrap.com/docs">Bootstrap Documentation</a> page. The custom utilities
-                        below were created to extend this theme past the default utility classes built into Bootstrap's
-                        framework.</p>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- First Column -->
-                        <div class="col-lg-4">
-
-                            <!-- Custom Text Color Utilities -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Custom Text Color Utilities</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p class="text-gray-100 p-3 bg-dark m-0">.text-gray-100</p>
-                                    <p class="text-gray-200 p-3 bg-dark m-0">.text-gray-200</p>
-                                    <p class="text-gray-300 p-3 bg-dark m-0">.text-gray-300</p>
-                                    <p class="text-gray-400 p-3 bg-dark m-0">.text-gray-400</p>
-                                    <p class="text-gray-500 p-3 m-0">.text-gray-500</p>
-                                    <p class="text-gray-600 p-3 m-0">.text-gray-600</p>
-                                    <p class="text-gray-700 p-3 m-0">.text-gray-700</p>
-                                    <p class="text-gray-800 p-3 m-0">.text-gray-800</p>
-                                    <p class="text-gray-900 p-3 m-0">.text-gray-900</p>
-                                </div>
-                            </div>
-
-                            <!-- Custom Font Size Utilities -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Custom Font Size Utilities</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p class="text-xs">.text-xs</p>
-                                    <p class="text-lg mb-0">.text-lg</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Second Column -->
-                        <div class="col-lg-4">
-
-                            <!-- Background Gradient Utilities -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Custom Background Gradient Utilities
-                                    </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="px-3 py-5 bg-gradient-primary text-white">.bg-gradient-primary</div>
-                                    <div class="px-3 py-5 bg-gradient-secondary text-white">.bg-gradient-secondary</div>
-                                    <div class="px-3 py-5 bg-gradient-success text-white">.bg-gradient-success</div>
-                                    <div class="px-3 py-5 bg-gradient-info text-white">.bg-gradient-info</div>
-                                    <div class="px-3 py-5 bg-gradient-warning text-white">.bg-gradient-warning</div>
-                                    <div class="px-3 py-5 bg-gradient-danger text-white">.bg-gradient-danger</div>
-                                    <div class="px-3 py-5 bg-gradient-light text-white">.bg-gradient-light</div>
-                                    <div class="px-3 py-5 bg-gradient-dark text-white">.bg-gradient-dark</div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Third Column -->
-                        <div class="col-lg-4">
-
-                            <!-- Grayscale Utilities -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Custom Grayscale Background Utilities
-                                    </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="p-3 bg-gray-100">.bg-gray-100</div>
-                                    <div class="p-3 bg-gray-200">.bg-gray-200</div>
-                                    <div class="p-3 bg-gray-300">.bg-gray-300</div>
-                                    <div class="p-3 bg-gray-400">.bg-gray-400</div>
-                                    <div class="p-3 bg-gray-500 text-white">.bg-gray-500</div>
-                                    <div class="p-3 bg-gray-600 text-white">.bg-gray-600</div>
-                                    <div class="p-3 bg-gray-700 text-white">.bg-gray-700</div>
-                                    <div class="p-3 bg-gray-800 text-white">.bg-gray-800</div>
-                                    <div class="p-3 bg-gray-900 text-white">.bg-gray-900</div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Lives Alanzoka</h1>
                     </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/gRuimTM4MJ8?si=sOU5wfcipnvj4i5T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/zvxt5h7sCso?si=LIh--3T31rHomq_0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/YiXfcQM8sNY?si=bJ5pv0JQRw0oMfuT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/0wXtEZPI8_Q?si=5GIf32I6qAvePQWi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                    </div>
+                            <!--<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Próximo</span>
+                            </a>-->
+                    
+
+                        <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/5yfkGVYrcMc?si=JQuKuGiRRCTDQ3uX" title="YouTube video player"
+                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                         <iframe width="560" height="315" src="https://www.youtube.com/embed/47BxjnFTwcQ?si=sr_WC-KhXICfzbqJ" title="YouTube video player" frameborder="0" 
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                         <br>
+                         <iframe width="560" height="315" src="https://www.youtube.com/embed/1rcSyN74BY0?si=HKjki2y_HQJS9p33" title="YouTube video player" frameborder="0" 
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                         <iframe width="560" height="315" src="https://www.youtube.com/embed/NcHyE_N1QDI?si=MVd4W7L2GWOd3ylb" title="YouTube video player" frameborder="0" 
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+                    </div>
+
 
                 </div>
                 <!-- /.container-fluid -->
@@ -460,7 +423,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer>
@@ -478,8 +441,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -491,7 +453,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="./logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -506,6 +468,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
