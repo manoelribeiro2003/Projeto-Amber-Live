@@ -1,3 +1,4 @@
+
 <?php
 include_once('./php/conexao.php');
 // include_once('./verificacao.php');
@@ -59,7 +60,7 @@ if (isset($_SESSION['logado'])) {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="./index.html">
+                <a class="nav-link" href="./index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Lives</span></a>
             </li>
@@ -74,7 +75,7 @@ if (isset($_SESSION['logado'])) {
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="gaules.php">
+                <a class="nav-link collapsed" href="./streamers/gaules.html">
                     <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
                     <span>Gaules</span>
                 </a>
@@ -82,7 +83,7 @@ if (isset($_SESSION['logado'])) {
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="alanzoka.php">
+                <a class="nav-link collapsed" href="./streamers/alanzoka.html">
                     <img style="width: 30px; border-radius: 15px;" src="../imagens/alanzika.jpg" alt="">
                     <span>Alanzoka</span>
                 </a>
@@ -371,40 +372,33 @@ if (isset($_SESSION['logado'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Lives</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Lives Alanzoka</h1>
                     </div>
 
-                    <div class="container">
-                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <!-- <div class="carousel-item active">
-                                        <iframe width="1200" height="562.50"
-                                            src="https://player.twitch.tv/?channel=gaules&parent=www.example.com"
-                                            frameborder="0" allowfullscreen="true" scrolling="no">
-                                        </iframe>
-                                    </div> -->
-                                <div class="carousel-item active">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/5yfkGVYrcMc?si=JQuKuGiRRCTDQ3uX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/gRuimTM4MJ8?si=sOU5wfcipnvj4i5T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
-                                <div class="carousel-item">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/47BxjnFTwcQ?si=sr_WC-KhXICfzbqJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/zvxt5h7sCso?si=LIh--3T31rHomq_0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
-                                <div class="carousel-item">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/1rcSyN74BY0?si=HKjki2y_HQJS9p33" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/YiXfcQM8sNY?si=bJ5pv0JQRw0oMfuT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
-                                <div class="carousel-item">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/NcHyE_N1QDI?si=MVd4W7L2GWOd3ylb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                <div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/0wXtEZPI8_Q?si=5GIf32I6qAvePQWi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    </div>
+                            <!--<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Anterior</span>
                             </a>
                             <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Próximo</span>
-                            </a>
-                        </div>
+                            </a>-->
+                    
 
                         <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/5yfkGVYrcMc?si=JQuKuGiRRCTDQ3uX" title="YouTube video player"
                          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
