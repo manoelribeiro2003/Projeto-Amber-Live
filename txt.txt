@@ -1,1 +1,1 @@
-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
+SELECT acompanha.id_acompanhamento, usuarios.nome, streamers.name FROM usuarios JOIN acompanha ON usuarios.id_usuario = acompanha.id_usuario JOIN streamers ON streamers.id_streamer = acompanha.id_streamer;
