@@ -310,7 +310,7 @@ if (isset($_SESSION['logado'])) {
                                 <?php
                                 if ($logado) {
                                     echo ('
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="./perfil">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Perfil
                                         </a>
@@ -330,7 +330,7 @@ if (isset($_SESSION['logado'])) {
                                         ');
                                 }else {
                                     echo('
-                                        <a class="dropdown-item" href="./register.html">
+                                        <a class="dropdown-item" href="./register.php">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Criar Conta
                                         </a>
