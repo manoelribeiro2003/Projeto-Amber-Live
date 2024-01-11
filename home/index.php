@@ -5,15 +5,27 @@ session_start();
 if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
-    }elseif ($_SESSION['logado'] == TRUE) {
-        $email = $_SESSION['email'];
-        $sql = "SELECT name FROM streamers WHERE email = '$email'";
+    } elseif ($_SESSION['logado'] == TRUE) {
+        $id = $_SESSION['id'];
+
+        $sql = "SELECT * FROM usuarios WHERE id = '$id'";
+        $sql_seguidor = "SELECT usuarios.id, usuarios.name, usuarios.status, usuarios.imagem, seguidores.id_seguido FROM usuarios INNER JOIN seguidores WHERE usuarios.id = seguidores.id_seguidor;";
+#comando sql: 
+// SELECT usuarios.id, usuarios.name, seguidores.id_seguido 
+// FROM usuarios 
+// INNER JOIN seguidores 
+// WHERE usuarios.id = 14;
         $resultado = $conn->query($sql);
+        $resultado_seguidor = $conn->query($sql_seguidor);
+
+        $linha_seguidor = mysqli_fetch_array($resultado_seguidor);
         $linha = mysqli_fetch_array($resultado);
     }
-}else {
+} else {
     $_SESSION['logado'] = FALSE;
 }
+
+$sql = "SELECT * FROM seguidores WHERE id_seguidor = ";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -91,26 +103,25 @@ if (isset($_SESSION['logado'])) {
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+
+            <!--------------------------------- STREAMERS OFFLINE ------------------------------->
             <!-- Heading -->
             <div class="sidebar-heading">
                 Streamers Offline
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
+            
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <img style="width: 30px; border-radius: 15px;" src="../imagens/quackity.png" alt="">
                     <span>Quackity</span></a>
             </li>
 
-            <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <img style="width: 30px; border-radius: 15px;" src="../imagens/joaogameplays.jpg" alt="">
                     <span>Joao Gameplays</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <img style="width: 30px; border-radius: 15px;" src="../imagens/enzoCraft.jpg" alt="">
@@ -310,7 +321,7 @@ if (isset($_SESSION['logado'])) {
                                 <?php
                                 if ($logado) {
                                     echo ('
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="./perfil">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Perfil
                                         </a>
@@ -328,9 +339,9 @@ if (isset($_SESSION['logado'])) {
                                             Sair
                                         </a>
                                         ');
-                                }else {
-                                    echo('
-                                        <a class="dropdown-item" href="register.html">
+                                } else {
+                                    echo ('
+                                        <a class="dropdown-item" href="./register.php">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Criar Conta
                                         </a>
