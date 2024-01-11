@@ -59,7 +59,7 @@ if (isset($_SESSION['logado'])) {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="./index.html">
+                <a class="nav-link" href="./index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Lives</span></a>
             </li>
