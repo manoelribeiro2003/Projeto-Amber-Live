@@ -6,8 +6,9 @@ include_once('./php/cores.php');
 $email = $_POST['email'];
 $senha = $_POST['senha'];
 
-$sql_select = "SELECT * FROM streamers WHERE email = '$email' AND senha = '$senha'";
+$sql_select = "SELECT id FROM usuarios WHERE email = '$email' AND senha = '$senha'";
 $result = $conn->query($sql_select);
+$linha = $result->fetch_array();
 
 session_start();
 if ($result->num_rows == 0) {
@@ -15,7 +16,7 @@ if ($result->num_rows == 0) {
     header('Location:./login.php');
 }else{
     $_SESSION['logado'] = TRUE;
-    $_SESSION['email'] = $email;
+    $_SESSION['id'] = $linha['id'];
     header('Location:./index.php');
 
 }

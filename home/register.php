@@ -17,13 +17,13 @@ if (isset($_POST['nome_usuario']) || isset($_POST['senha']) || isset($_POST['ema
         $senha = $_POST['senha'];
         $email = $_POST['email'];
 
-        $sql = "SELECT * FROM streamers WHERE email = '$email'";
+        $sql = "SELECT * FROM usuarios WHERE email = '$email'";
         $result = $conn->query($sql);
 
         if ($result) {
             $linha = $result->num_rows;
             if ($linha == 0) {
-                $sql_inserir = "INSERT INTO `streamers`(`name`,`email`, `senha`) VALUES ('$usuario','$email','$senha')";
+                $sql_inserir = "INSERT INTO `usuarios`(`name`,`email`, `senha`) VALUES ('$usuario','$email','$senha')";
                 if ($conn->query($sql_inserir)) {
                     $mensagem = green('Usuario cadastrado com sucesso');
                 } else {
