@@ -2,14 +2,14 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Tempo de geração: 09/01/2024 às 02:05
--- Versão do servidor: 10.5.20-MariaDB
--- Versão do PHP: 7.3.33
+-- Host: 127.0.0.1
+-- Tempo de geração: 11-Jan-2024 às 15:08
+-- Versão do servidor: 10.4.32-MariaDB
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "-03:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -24,28 +24,7 @@ SET time_zone = "-03:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `acompanha`
---
-
-CREATE TABLE `acompanha` (
-  `id_acompanhamento` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_streamer` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Despejando dados para a tabela `acompanha`
---
-
-INSERT INTO `acompanha` (`id_acompanhamento`, `id_usuario`, `id_streamer`) VALUES
-(1, 5, 2),
-(2, 5, 3),
-(3, 5, 5);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `atendimentos`
+-- Estrutura da tabela `atendimentos`
 --
 
 CREATE TABLE `atendimentos` (
@@ -56,7 +35,7 @@ CREATE TABLE `atendimentos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Despejando dados para a tabela `atendimentos`
+-- Extraindo dados da tabela `atendimentos`
 --
 
 INSERT INTO `atendimentos` (`id_atendimento`, `data`, `tipo`, `id_paciente`) VALUES
@@ -66,7 +45,7 @@ INSERT INTO `atendimentos` (`id_atendimento`, `data`, `tipo`, `id_paciente`) VAL
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `pacientes`
+-- Estrutura da tabela `pacientes`
 --
 
 CREATE TABLE `pacientes` (
@@ -78,7 +57,7 @@ CREATE TABLE `pacientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Despejando dados para a tabela `pacientes`
+-- Extraindo dados da tabela `pacientes`
 --
 
 INSERT INTO `pacientes` (`id_paciente`, `nome`, `sexo`, `cpf`, `data_nascimento`) VALUES
@@ -89,10 +68,31 @@ INSERT INTO `pacientes` (`id_paciente`, `nome`, `sexo`, `cpf`, `data_nascimento`
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `streamers`
+-- Estrutura da tabela `seguidores`
 --
 
-CREATE TABLE `streamers` (
+CREATE TABLE `seguidores` (
+  `id_seguidor` int(11) NOT NULL,
+  `id_seguido` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `seguidores`
+--
+
+INSERT INTO `seguidores` (`id_seguidor`, `id_seguido`) VALUES
+(13, 1),
+(14, 1),
+(14, 2),
+(13, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `name` varchar(110) NOT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
@@ -104,83 +104,53 @@ CREATE TABLE `streamers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Despejando dados para a tabela `streamers`
+-- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `streamers` (`id`, `name`, `created`, `modified`, `status`, `imagem`, `email`, `senha`) VALUES
+INSERT INTO `usuarios` (`id`, `name`, `created`, `modified`, `status`, `imagem`, `email`, `senha`) VALUES
 (1, 'Gaulês', '2023-11-27 10:54:33', '2024-01-09 01:55:28', 1, NULL, 'gaules@email.com', '1234'),
 (2, 'Alanzoka', '2023-11-27 10:54:33', '2023-11-27 14:54:33', 0, NULL, 'alanzoka@email.com', '1234'),
 (3, 'Quackity', '2023-11-28 10:55:34', '2024-01-09 01:56:55', 1, NULL, 'quackity@email.com', '1234'),
 (4, 'Joao Gameplays', '2023-11-27 10:55:34', '2023-11-27 14:55:34', 0, NULL, 'joaogameplays@email.com', '1234'),
 (5, 'EnzoCraft', '2023-11-27 10:56:13', '2023-11-27 14:56:13', 0, NULL, 'enzocraft@email.com', '1234'),
 (13, 'cris', '2024-01-09 01:34:46', '2024-01-09 01:34:46', 0, NULL, 'cris@email.com', '1234'),
-(14, 'manoel', '2024-01-09 02:02:23', '2024-01-09 02:03:00', 0, NULL, 'manoel@email.com', 'ci3s#TI06');
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `id_usuario` int(11) NOT NULL,
-  `nome` varchar(20) NOT NULL,
-  `imagem` varchar(220) DEFAULT NULL,
-  `email` varchar(220) NOT NULL,
-  `senha` varchar(220) NOT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `modified` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Despejando dados para a tabela `usuarios`
---
-
-INSERT INTO `usuarios` (`id_usuario`, `nome`, `imagem`, `email`, `senha`, `created`, `modified`) VALUES
-(5, 'manoel_06', NULL, 'manoel@email.com', '1234', '2023-12-20 10:06:00', '2023-12-20 14:05:40'),
-(6, 'cris_05', NULL, 'cris@email.com', '1234', '2023-12-20 10:07:23', '2023-12-20 14:07:00'),
-(7, 'gabriel_04', NULL, 'gabriel@email.com', '1234', '2023-12-20 10:07:51', '2023-12-20 14:07:35');
+(14, 'manoel', '2024-01-09 02:02:23', '2024-01-11 08:35:46', 0, NULL, 'manoel@email.com', '1234'),
+(15, 'JessJess', '2024-01-10 11:14:20', '2024-01-10 11:14:20', 0, NULL, 'jess@email.com', '1234'),
+(16, 'Dilera', '2024-01-11 10:09:48', '2024-01-11 10:09:48', 0, NULL, 'dilera@email.com', '1234');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `acompanha`
---
-ALTER TABLE `acompanha`
-  ADD PRIMARY KEY (`id_acompanhamento`),
-  ADD KEY `id_streamer` (`id_streamer`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
--- Índices de tabela `atendimentos`
+-- Índices para tabela `atendimentos`
 --
 ALTER TABLE `atendimentos`
   ADD PRIMARY KEY (`id_atendimento`),
   ADD KEY `id_paciente` (`id_paciente`);
 
 --
--- Índices de tabela `pacientes`
+-- Índices para tabela `pacientes`
 --
 ALTER TABLE `pacientes`
   ADD PRIMARY KEY (`id_paciente`);
 
 --
--- Índices de tabela `streamers`
+-- Índices para tabela `seguidores`
 --
-ALTER TABLE `streamers`
+ALTER TABLE `seguidores`
+  ADD PRIMARY KEY (`id_seguido`,`id_seguidor`),
+  ADD KEY `id_seguidor` (`id_seguidor`);
+
+--
+-- Índices para tabela `usuarios`
+--
+ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Índices de tabela `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id_usuario`);
-
---
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -196,26 +166,27 @@ ALTER TABLE `pacientes`
   MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de tabela `streamers`
---
-ALTER TABLE `streamers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `atendimentos`
+-- Limitadores para a tabela `atendimentos`
 --
 ALTER TABLE `atendimentos`
   ADD CONSTRAINT `atendimentos_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id_paciente`);
+
+--
+-- Limitadores para a tabela `seguidores`
+--
+ALTER TABLE `seguidores`
+  ADD CONSTRAINT `seguidores_ibfk_1` FOREIGN KEY (`id_seguidor`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `seguidores_ibfk_2` FOREIGN KEY (`id_seguido`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
