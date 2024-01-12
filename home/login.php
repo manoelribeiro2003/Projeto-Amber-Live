@@ -1,15 +1,10 @@
 <?php
 
 session_start();
-if (isset($_SESSION['logado'])) {
-    if ($_SESSION['logado'] === TRUE) {
-        header('Location:./index.php');
-        
-    }
-} else {
-    $_SESSION['logado'] = 'naoEncontrado';
-}
 
+if (!isset($_SESSION['logado'])) {
+    $_SESSION['logado'] = FALSE;
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,14 +61,17 @@ if (isset($_SESSION['logado'])) {
                                         <h1 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
                                     </div>
                                     <?php
-                                    if ($_SESSION['logado'] == 'naoEncontrado') {
+                                    if ($_SESSION['logado'] === 'naoEncontrado') {
                                         echo ('
                                         <div class="text-center">
                                             <label style="color: red;" class="form-text">Email ou senha incorretos</label>
                                         </div>
                                         ');
-                                    } elseif ($_SESSION['logado'] == FALSE) {
+                                        unset($_SESSION['logado']);
+                                    } elseif ($_SESSION['logado'] === FALSE) {
                                         echo ('');
+                                    }elseif ($_SESSION['logado'] === TRUE) {
+                                        header("Location:./index.php");
                                     }
                                     ?>
 

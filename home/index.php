@@ -1,31 +1,39 @@
 <?php
 include_once('./php/conexao.php');
-// include_once('./verificacao.php');
+
 session_start();
 if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
     } elseif ($_SESSION['logado'] == TRUE) {
+
         $id = $_SESSION['id'];
-
         $sql = "SELECT * FROM usuarios WHERE id = '$id'";
-        $sql_seguidor = "SELECT usuarios.id, usuarios.name, usuarios.status, usuarios.imagem, seguidores.id_seguido FROM usuarios INNER JOIN seguidores WHERE usuarios.id = seguidores.id_seguidor;";
-#comando sql: 
-// SELECT usuarios.id, usuarios.name, seguidores.id_seguido 
-// FROM usuarios 
-// INNER JOIN seguidores 
-// WHERE usuarios.id = 14;
         $resultado = $conn->query($sql);
-        $resultado_seguidor = $conn->query($sql_seguidor);
-
-        $linha_seguidor = mysqli_fetch_array($resultado_seguidor);
         $linha = mysqli_fetch_array($resultado);
+
+        $sql_streamers_online = "SELECT * FROM usuarios 
+                                WHERE id IN (SELECT id_seguido FROM seguidores
+                                WHERE id_seguidor = $id) AND status = TRUE;
+                                ";
+
+        $sql_streamers_offline = "SELECT * FROM usuarios 
+                                WHERE id IN (SELECT id_seguido FROM seguidores
+                                WHERE id_seguidor = $id) AND status = FALSE;
+                                ";
+
+        $result_online = $conn->query($sql_streamers_online);
+        $result_offline = $conn->query($sql_streamers_offline);
+
+        // while ($linha_streamer_online = mysqli_fetch_assoc($result_online)) {
+        //     echo $linha_streamer_online['name'];
+        // }
+
     }
 } else {
     $_SESSION['logado'] = FALSE;
 }
 
-$sql = "SELECT * FROM seguidores WHERE id_seguidor = ";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -77,56 +85,58 @@ $sql = "SELECT * FROM seguidores WHERE id_seguidor = ";
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
+
+            <!--------------------------------- STREAMERS ONLINE ------------------------------->
+            <div class='sidebar-heading'>
                 Streamers Online
             </div>
+            <?php
+            if ($_SESSION['logado'] === TRUE) {
+                foreach ($result_online as $streamer_online) {
+                    echo "
+                <li class='nav-item'>
+                    <a class='nav-link collapsed' href='gaules.php'>
+                        <img src='../imagens/gaules.png' alt='' style='width: 30px; border-radius: 15px;'>
+                        <span>$streamer_online[name]</span>
+                    </a>
+                </li>";
+                }
+            }
+            ?>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="gaules.php">
                     <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
                     <span>Gaules</span>
                 </a>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="alanzoka.php">
-                    <img style="width: 30px; border-radius: 15px;" src="../imagens/alanzika.jpg" alt="">
-                    <span>Alanzoka</span>
-                </a>
-            </li>
+            </li> -->
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+
 
 
             <!--------------------------------- STREAMERS OFFLINE ------------------------------->
             <!-- Heading -->
-            <div class="sidebar-heading">
+
+            <div class='sidebar-heading'>
                 Streamers Offline
             </div>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <img style="width: 30px; border-radius: 15px;" src="../imagens/quackity.png" alt="">
-                    <span>Quackity</span></a>
-            </li>
+            <?php
+            if ($_SESSION['logado'] === TRUE) {
+                foreach ($result_offline as $streamer_offline) {
+                    echo "
+                <li class='nav-item'>
+                    <a class='nav-link collapsed' href='gaules.php'>
+                        <img src='../imagens/gaules.png' alt='' style='width: 30px; border-radius: 15px;'>
+                        <span>$streamer_offline[name]</span>
+                    </a>
+                </li>";
+                }
+            }
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <img style="width: 30px; border-radius: 15px;" src="../imagens/joaogameplays.jpg" alt="">
-                    <span>Joao Gameplays</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <img style="width: 30px; border-radius: 15px;" src="../imagens/enzoCraft.jpg" alt="">
-                    <span>EnzoCraft</span></a>
-            </li>
+            ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

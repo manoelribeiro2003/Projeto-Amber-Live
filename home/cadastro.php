@@ -1,43 +1,17 @@
 <?php
 include_once('./php/conexao.php');
-include_once('./php/cores.php');
 
-$mensagem = "";
-if (isset($_POST['nome_usuario']) || isset($_POST['senha']) || isset($_POST['email'])) {
+session_start();
+if (isset($_SESSION['registrado'])) {
+    if ($_SESSION['registrado'] === TRUE) {
 
-    if (strlen($_POST['nome_usuario']) == 0) {
-        echo (blue('Preencha seu nome de usuário'));
-    } elseif (strlen($_POST['senha']) == 0) {
-        echo ('Preencha sua senha');
-    } elseif (strlen($_POST['email']) == 0) {
-        echo ('Preencha seu email');
-    } else {
-
-        $usuario = $_POST['nome_usuario'];
-        $senha = $_POST['senha'];
-        $email = $_POST['email'];
-
-        $sql = "SELECT * FROM usuarios WHERE email = '$email'";
-        $result = $conn->query($sql);
-
-        if ($result) {
-            $linha = $result->num_rows;
-            if ($linha == 0) {
-                $sql_inserir = "INSERT INTO `usuarios`(`name`,`email`, `senha`) VALUES ('$usuario','$email','$senha')";
-                if ($conn->query($sql_inserir)) {
-                    $mensagem = green('Usuario cadastrado com sucesso');
-                    sleep(5);
-                } else {
-                    echo ('Erro ao cadastrar usuário! Erro: ' . $conn->error);
-                }
-            } elseif ($linha > 0) {
-                $mensagem = red('Email já cadastrado');
-            }
-        } else {
-            echo ("Erro na query: " . $conn->error);
-        }
+    }else {
+        header('Location:./register.php');
     }
+}else {
+    header('Location:./register.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -50,7 +24,7 @@ if (isset($_POST['nome_usuario']) || isset($_POST['senha']) || isset($_POST['ema
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Crie sua conta</title>
+    <title>Complete a sua conta</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -79,10 +53,7 @@ if (isset($_POST['nome_usuario']) || isset($_POST['senha']) || isset($_POST['ema
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Crie sua conta</h1>
-                            </div>
-                            <div class="text-center mb-4">
-                                <div class="form-text"><?php echo $mensagem; ?></div>
+                                <h1 class="h4 text-gray-900 mb-4">Complete sua conta</h1>
                             </div>
                             <form action="./register.php" method="POST" class="user">
 
