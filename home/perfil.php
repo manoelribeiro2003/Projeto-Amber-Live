@@ -5,6 +5,7 @@ session_start();
 if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
+        header("Location:./index.php");
     } elseif ($_SESSION['logado'] == TRUE) {
 
         $id = $_SESSION['id'];
@@ -29,9 +30,53 @@ if (isset($_SESSION['logado'])) {
         //     echo $linha_streamer_online['name'];
         // }
 
+    } elseif ($_SESSION['logado'] === FALSE) {
+        header('Location:./index.php');
     }
 } else {
     $_SESSION['logado'] = FALSE;
+    header('Location:./index.php');
+}
+
+if (isset($_SESSION['logado'])) {
+    if ($_SESSION['logado'] === TRUE) {
+        if (isset($_FILES['arquivo'])) {
+            
+            $DoisMegaBytes = 2097152;
+            $arquivo = $_FILES['arquivo'];
+
+            if ($arquivo['error']) {
+                die('Falha ao enviar arquivo');
+            }
+
+            if ($arquivo['size'] > $DoisMegaBytes) {
+                die('Arquivo muito grande! Max: 2MB.');
+            }
+
+
+            $pasta = 'imagens/';
+            $nomeDoArquivo =  $arquivo['name'];
+            $novoNomeDoArquivo = uniqid();
+            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION)); #--- retorna a extensão do nome do arquivo em minusculo
+
+            if ($extensao != 'jpg' && $extensao != 'png') {
+                die('Tipo de arquivo não aceito!');
+            }
+
+            $path = $pasta . $novoNomeDoArquivo . '.' . $extensao;
+
+            $deu_certo = move_uploaded_file($arquivo['tmp_name'], $path);
+
+            if ($deu_certo) {
+                echo ('Deu certo');
+                $conn->query("UPDATE usuarios SET imagem='$path' WHERE id = $id") or die('Erro: ' . $conn->error);
+            } else {
+                echo '<p style="color: red;">Falha ao enviar arquivo</p>';
+            }
+        }
+
+        $result = $conn->query('SELECT * FROM usuarios') or die($conn->error);
+    }
 }
 
 ?>
@@ -84,20 +129,10 @@ if (isset($_SESSION['logado'])) {
                     <span>Lives</span></a>
             </li>
 
-            <?php
-            if ($_SESSION['logado'] === FALSE) {
-                echo("
-                <div class='sidebar-heading'>
-                    Streamers Recomendados
-                </div>
-                ");
-            }
-            ?>
-
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
-                echo("
+                echo ("
                 <div class='sidebar-heading'>
                     Streamers Online
                 </div>
@@ -129,7 +164,7 @@ if (isset($_SESSION['logado'])) {
             <!--------------------------------- STREAMERS OFFLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
-                echo("
+                echo ("
                 <div class='sidebar-heading'>
                     Streamers Offline
                 </div>
@@ -398,58 +433,48 @@ if (isset($_SESSION['logado'])) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Lives</h1>
+                    <div class="row ml-2 mb-2 mt-2 card">
+                        <img width="50" src="./<?=$linha['imagem']?>" alt="..." class="ml-2 mb-2 mt-2">
+                        <p class="ml-2 mb-2 mt-2 lead">Nome do Usuário</p>
+                        <button class="btn btn-warning" onclick="abrirModalEditar()">Editar</button>
                     </div>
-
-                    <div class="container">
-                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <!-- <div class="carousel-item active">
-                                        <iframe width="1200" height="562.50"
-                                            src="https://player.twitch.tv/?channel=gaules&parent=www.example.com"
-                                            frameborder="0" allowfullscreen="true" scrolling="no">
-                                        </iframe>
-                                    </div> -->
-                                <div class="carousel-item active">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/5yfkGVYrcMc?si=JQuKuGiRRCTDQ3uX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
-                                <div class="carousel-item">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/47BxjnFTwcQ?si=sr_WC-KhXICfzbqJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
-                                <div class="carousel-item">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/1rcSyN74BY0?si=HKjki2y_HQJS9p33" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
-                                <div class="carousel-item">
-                                    <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/NcHyE_N1QDI?si=MVd4W7L2GWOd3ylb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Anterior</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Próximo</span>
-                            </a>
-                        </div>
-
-                        <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/5yfkGVYrcMc?si=JQuKuGiRRCTDQ3uX" title="YouTube video player"
-                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-                         <iframe width="560" height="315" src="https://www.youtube.com/embed/47BxjnFTwcQ?si=sr_WC-KhXICfzbqJ" title="YouTube video player" frameborder="0" 
-                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                         <br>
-                         <iframe width="560" height="315" src="https://www.youtube.com/embed/1rcSyN74BY0?si=HKjki2y_HQJS9p33" title="YouTube video player" frameborder="0" 
-                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                         <iframe width="560" height="315" src="https://www.youtube.com/embed/NcHyE_N1QDI?si=MVd4W7L2GWOd3ylb" title="YouTube video player" frameborder="0" 
-                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
-                    </div>
-
-
                 </div>
+
+                <!----------------- Modal Editar --------------->
+                <div class="modal fade" id='modalEditar' tabindex="-1" role="dialog" aria-label="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Editar Usuário</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-floating mb-3">
+                                        <label>Imagem</label>
+                                        <img width="50" src="./<?=$linha['imagem']?>" alt="..." class="ml-2 mb-2 mt-2">
+                                        <input name="arquivo" type="file" class="form-control-file">
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="editarValor" name="valor" class="form-control">
+                                        <label>Nome de Usuário</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" id="editarQuantidade" name="quantidade" class="form-control">
+                                        <label>Descrição</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type='hidden' name='editar' value='editar'></input>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" onclick="fecharModalEditar()">Fechar</button>
+                                        <input type="submit" class="btn btn-primary" value="Salvar">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- /.container-fluid -->
 
             </div>
@@ -512,6 +537,33 @@ if (isset($_SESSION['logado'])) {
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
+
+    <script>
+        function abrirModalEditar(id) {
+        $("#modalEditar").modal("show");
+
+        produto = document.getElementById("produtos" + id);
+        valor = document.getElementById("valor" + id);
+        quantidade = document.getElementById("quantidade" + id);
+        validade = document.getElementById("validade" + id);
+
+        editarId = document.getElementById("editarId");
+        editarProduto = document.getElementById("editarProduto");
+        editarValor = document.getElementById("editarValor");
+        editarQuantidade = document.getElementById("editarQuantidade");
+        editarValidade = document.getElementById("editarValidade");
+
+        editarId.value = id;
+        editarProduto.value = produto.value;
+        editarValor.value = valor.value;
+        editarQuantidade.value = quantidade.value;
+        editarValidade.value = validade.value;
+    }
+
+    function fecharModalEditar() {
+        $("#modalEditar").modal("hide");
+    }
+    </script>
 </body>
 
 </html>

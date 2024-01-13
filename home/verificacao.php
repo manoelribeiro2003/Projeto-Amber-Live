@@ -1,7 +1,6 @@
 <?php
 
 include_once('./php/conexao.php');
-
 if (isset($_POST['email']) && $_POST['senha']) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
@@ -19,6 +18,8 @@ if (isset($_POST['email']) && $_POST['senha']) {
         $_SESSION['id'] = $linha['id'];
         header('Location:./index.php');
     }
-}else {
+} else {
     header("Location:./login.php");
 }
+
+
