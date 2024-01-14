@@ -40,13 +40,13 @@ if (isset($_SESSION['logado'])) {
 
 if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === TRUE) {
-if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
-    $descricao = $_POST['descricao'];
-    $newUserName = $_POST['nomeUsuario'];
+        if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
+            $descricao = $_POST['descricao'];
+            $newUserName = $_POST['nomeUsuario'];
 
-    $sql = "UPDATE usuarios SET descricao = '$descricao', name = '$newUserName' WHERE id = $id;";
-    $conn->query($sql);
-}
+            $sql = "UPDATE usuarios SET descricao = '$descricao', name = '$newUserName' WHERE id = $id;";
+            $conn->query($sql);
+        }
 
 
         if (isset($_FILES['arquivo'])) {
@@ -62,9 +62,9 @@ if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
                         die('Arquivo muito grande! Max: 2MB.');
                     } else {
                         $pasta = 'imagens/';
-                        
+
                         $novoNomeDoArquivo = uniqid();
-                        
+
 
                         $path = $pasta . $novoNomeDoArquivo . '.' . $extensao;
                         $deu_certo = move_uploaded_file($arquivo['tmp_name'], $path);
@@ -78,7 +78,6 @@ if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
                     }
                 }
             } else {
-                
             }
         }
 
@@ -136,6 +135,18 @@ if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
                     <span>Lives</span></a>
             </li>
 
+            <style>
+                .streamerButton {
+                    background-color: transparent;
+                    padding: 5px 10px !important;
+                    border: none;
+                    font-size: 15px;
+                    margin-top: 10px;
+                    margin-bottom: 0px !important;
+
+                }
+            </style>
+
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
@@ -146,12 +157,16 @@ if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
                 ");
                 foreach ($result_online as $streamer_online) {
                     echo "
-                <li class='nav-item'>
-                    <a class='nav-link collapsed' href='gaules.php'>
-                        <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                        <span>$streamer_online[name]</span>
-                    </a>
-                </li>";
+                <form method='post' action='./user.php'>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_online[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_online[id]'>
+                        </button>
+                    </li>
+                </form>
+                ";
                 }
             }
             ?>
@@ -178,12 +193,16 @@ if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
                 ");
                 foreach ($result_offline as $streamer_offline) {
                     echo "
-                <li class='nav-item'>
-                    <a class='nav-link collapsed' href='gaules.php'>
-                        <img src='./$streamer_offline[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                        <span>$streamer_offline[name]</span>
-                    </a>
-                </li>";
+                    <form method='post' action='./user.php'>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_offline[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_offline[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_offline[id]'>
+                        </button>
+                    </li>
+                </form>
+                ";
                 }
             }
 

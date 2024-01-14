@@ -84,32 +84,38 @@ if (isset($_SESSION['logado'])) {
                     <span>Lives</span></a>
             </li>
 
-            <?php
-            if ($_SESSION['logado'] === FALSE) {
-                echo("
-                <div class='sidebar-heading'>
-                    Streamers Recomendados
-                </div>
-                ");
-            }
-            ?>
+            <style>
+                .streamerButton {
+                    background-color: transparent;
+                    padding: 5px 10px !important;
+                    border: none;
+                    font-size: 15px;
+                    margin-top: 10px;
+                    margin-bottom: 0px !important;
+
+                }
+            </style>
 
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
-                echo("
+                echo ("
                 <div class='sidebar-heading'>
                     Streamers Online
                 </div>
                 ");
                 foreach ($result_online as $streamer_online) {
                     echo "
-                <li class='nav-item'>
-                    <a class='nav-link collapsed' href='gaules.php'>
-                        <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                        <span>$streamer_online[name]</span>
-                    </a>
-                </li>";
+                <form method='post' action='./user.php'>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_online[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_online[id]'>
+                        </button>
+                    </li>
+                </form>
+                ";
                 }
             }
             ?>
@@ -129,19 +135,23 @@ if (isset($_SESSION['logado'])) {
             <!--------------------------------- STREAMERS OFFLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
-                echo("
+                echo ("
                 <div class='sidebar-heading'>
                     Streamers Offline
                 </div>
                 ");
                 foreach ($result_offline as $streamer_offline) {
                     echo "
-                <li class='nav-item'>
-                    <a class='nav-link collapsed' href='gaules.php'>
-                        <img src='./$streamer_offline[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                        <span>$streamer_offline[name]</span>
-                    </a>
-                </li>";
+                    <form method='post' action='./user.php'>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_offline[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_offline[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_offline[id]'>
+                        </button>
+                    </li>
+                </form>
+                ";
                 }
             }
 

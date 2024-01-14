@@ -40,43 +40,62 @@ if (isset($_SESSION['logado'])) {
 
 if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === TRUE) {
+        if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
+            $descricao = $_POST['descricao'];
+            $newUserName = $_POST['nomeUsuario'];
+
+            $sql = "UPDATE usuarios SET descricao = '$descricao', name = '$newUserName' WHERE id = $id;";
+            $conn->query($sql);
+        }
+
+
         if (isset($_FILES['arquivo'])) {
-
-            $DoisMegaBytes = 2097152;
             $arquivo = $_FILES['arquivo'];
-
-            if ($arquivo['error']) {
-                die('Falha ao enviar arquivo');
-            }
-
-            if ($arquivo['size'] > $DoisMegaBytes) {
-                die('Arquivo muito grande! Max: 2MB.');
-            }
-
-
-            $pasta = 'imagens/';
             $nomeDoArquivo =  $arquivo['name'];
-            $novoNomeDoArquivo = uniqid();
-            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION)); #--- retorna a extensão do nome do arquivo em minusculo
+            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
+            if ($extensao == 'jpg' || $extensao == 'png') {
+                if ($arquivo['error']) {
+                    die('Falha ao enviar arquivo');
+                } else {
+                    $DoisMegaBytes = 2097152;
+                    if ($arquivo['size'] > $DoisMegaBytes) {
+                        die('Arquivo muito grande! Max: 2MB.');
+                    } else {
+                        $pasta = 'imagens/';
 
-            if ($extensao != 'jpg' && $extensao != 'png') {
-                die('Tipo de arquivo não aceito!');
-            }
+                        $novoNomeDoArquivo = uniqid();
 
-            $path = $pasta . $novoNomeDoArquivo . '.' . $extensao;
 
-            $deu_certo = move_uploaded_file($arquivo['tmp_name'], $path);
+                        $path = $pasta . $novoNomeDoArquivo . '.' . $extensao;
+                        $deu_certo = move_uploaded_file($arquivo['tmp_name'], $path);
 
-            if ($deu_certo) {
-                echo ('Deu certo');
-                $conn->query("UPDATE usuarios SET imagem='$path' WHERE id = $id") or die('Erro: ' . $conn->error);
+                        if ($deu_certo) {
+                            echo ('Deu certo');
+                            $conn->query("UPDATE usuarios SET imagem='$path' WHERE id = $id") or die('Erro: ' . $conn->error);
+                        } else {
+                            echo '<p style="color: red;">Falha ao enviar arquivo</p>';
+                        }
+                    }
+                }
             } else {
-                echo '<p style="color: red;">Falha ao enviar arquivo</p>';
             }
         }
 
         $result = $conn->query('SELECT * FROM usuarios') or die($conn->error);
     }
+}
+
+if (isset($_POST['idStreamer'])) {
+    $id = $_POST['idStreamer'];
+    $sql = "SELECT * FROM usuarios WHERE id = $id";
+    $result = $conn->query($sql);
+    if ($result) {
+        $streamer = $result->fetch_assoc();
+    } else {
+        header('Location:./index.php');
+    }
+}else{
+    header('Location:./index.php');
 }
 
 ?>
@@ -129,6 +148,18 @@ if (isset($_SESSION['logado'])) {
                     <span>Lives</span></a>
             </li>
 
+            <style>
+                .streamerButton {
+                    background-color: transparent;
+                    padding: 5px 10px !important;
+                    border: none;
+                    font-size: 15px;
+                    margin-top: 10px;
+                    margin-bottom: 0px !important;
+
+                }
+            </style>
+
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
@@ -139,21 +170,32 @@ if (isset($_SESSION['logado'])) {
                 ");
                 foreach ($result_online as $streamer_online) {
                     echo "
-                <li class='nav-item'>
                 <form method='post' action='./user.php'>
-                    <button class='nav-link collapsed'>
-                        <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                        <a class='nav-link collapsed' href='./user.php'><span>$streamer_online[name]</span></a>
-                    </button>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_online[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_online[id]'>
+                        </button>
+                    </li>
                 </form>
-                </li>";
+                ";
                 }
             }
             ?>
-            <form action='./excluir.php' method='POST'>
-                <input class=' btn btn-danger' type='submit' name='comando'><i class='fa fa-trash'>Botao deletar</i></input>
-                <input type='hidden' name='id' value='$linha[id]'></input>
-            </form>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- <li class="nav-item">
+                <a class="nav-link collapsed" href="gaules.php">
+                    <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
+                    <span>Gaules</span>
+                </a>
+            </li> -->
+
+            <!-- Divider -->
+
+
+
             <!--------------------------------- STREAMERS OFFLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
@@ -164,12 +206,16 @@ if (isset($_SESSION['logado'])) {
                 ");
                 foreach ($result_offline as $streamer_offline) {
                     echo "
-                <li class='nav-item'>
-                    <a class='nav-link collapsed' href='gaules.php'>
-                        <img src='./$streamer_offline[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                        <span>$streamer_offline[name]</span>
-                    </a>
-                </li>";
+                    <form method='post' action='./user.php'>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_offline[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_offline[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_offline[id]'>
+                        </button>
+                    </li>
+                </form>
+                ";
                 }
             }
 
@@ -423,68 +469,35 @@ if (isset($_SESSION['logado'])) {
 
                 </nav>
                 <!-- End of Topbar -->
-
+                <?php ?>
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <div class="row ml-2 mb-2 mt-2 card">
-                        <img width="50" src="./<?= $linha['imagem'] ?>" alt="..." class="ml-2 mb-2 mt-2">
-                        <p class="ml-2 mb-2 mt-2 lead">Nome do Usuário</p>
-                        <button class="btn btn-warning" onclick="abrirModalEditar()">Editar</button>
-                    </div>
-                </div>
-
-                <!----------------- Modal Editar --------------->
-                <div class="modal fade" id='modalEditar' tabindex="-1" role="dialog" aria-label="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Editar Usuário</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-floating mb-3">
-                                        <label>Imagem</label>
-                                        <img width="50" src="./<?= $linha['imagem'] ?>" alt="..." class="ml-2 mb-2 mt-2">
-                                        <input name="arquivo" type="file" class="form-control-file">
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" id="editarValor" name="valor" class="form-control">
-                                        <label>Nome de Usuário</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" id="editarQuantidade" name="quantidade" class="form-control">
-                                        <label>Descrição</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type='hidden' name='editar' value='editar'></input>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" onclick="fecharModalEditar()">Fechar</button>
-                                        <input type="submit" class="btn btn-primary" value="Salvar">
-                                    </div>
-                                </div>
-                            </form>
+                <div class="container">
+                    <div class="container row">
+                        <div class="col-12">
+                            <img class="d-block mx-auto img-thumbnail" width="200" src="./<?= $streamer['imagem'] ?>" alt="">
                         </div>
                     </div>
-                </div>
-
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                    <div class="container">
+                        <h6 class="display-6">Nome de Usuário</h6>
+                    </div>
+                    <div class="container">
+                        <h4 class="container text-dark display-4"><?= $streamer['name'] ?></h4>
+                    </div>
+                    <div class="container">
+                        <h6 class="display-6">Descrição</h6>
+                    </div>
+                    <div class="container">
+                        <blockquote class="container text-dark blockquote"><?= $streamer['descricao'] ?></blockquote>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+            </div>
+
+
 
         </div>
-        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
