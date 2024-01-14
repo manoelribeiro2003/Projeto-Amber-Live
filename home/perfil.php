@@ -40,38 +40,45 @@ if (isset($_SESSION['logado'])) {
 
 if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === TRUE) {
+if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
+    $descricao = $_POST['descricao'];
+    $newUserName = $_POST['nomeUsuario'];
+
+    $sql = "UPDATE usuarios SET descricao = '$descricao', name = '$newUserName' WHERE id = $id;";
+    $conn->query($sql);
+}
+
+
         if (isset($_FILES['arquivo'])) {
-            
-            $DoisMegaBytes = 2097152;
             $arquivo = $_FILES['arquivo'];
-
-            if ($arquivo['error']) {
-                die('Falha ao enviar arquivo');
-            }
-
-            if ($arquivo['size'] > $DoisMegaBytes) {
-                die('Arquivo muito grande! Max: 2MB.');
-            }
-
-
-            $pasta = 'imagens/';
             $nomeDoArquivo =  $arquivo['name'];
-            $novoNomeDoArquivo = uniqid();
-            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION)); #--- retorna a extensão do nome do arquivo em minusculo
+            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
+            if ($extensao == 'jpg' || $extensao == 'png') {
+                if ($arquivo['error']) {
+                    die('Falha ao enviar arquivo');
+                } else {
+                    $DoisMegaBytes = 2097152;
+                    if ($arquivo['size'] > $DoisMegaBytes) {
+                        die('Arquivo muito grande! Max: 2MB.');
+                    } else {
+                        $pasta = 'imagens/';
+                        
+                        $novoNomeDoArquivo = uniqid();
+                        
 
-            if ($extensao != 'jpg' && $extensao != 'png') {
-                die('Tipo de arquivo não aceito!');
-            }
+                        $path = $pasta . $novoNomeDoArquivo . '.' . $extensao;
+                        $deu_certo = move_uploaded_file($arquivo['tmp_name'], $path);
 
-            $path = $pasta . $novoNomeDoArquivo . '.' . $extensao;
-
-            $deu_certo = move_uploaded_file($arquivo['tmp_name'], $path);
-
-            if ($deu_certo) {
-                echo ('Deu certo');
-                $conn->query("UPDATE usuarios SET imagem='$path' WHERE id = $id") or die('Erro: ' . $conn->error);
+                        if ($deu_certo) {
+                            echo ('Deu certo');
+                            $conn->query("UPDATE usuarios SET imagem='$path' WHERE id = $id") or die('Erro: ' . $conn->error);
+                        } else {
+                            echo '<p style="color: red;">Falha ao enviar arquivo</p>';
+                        }
+                    }
+                }
             } else {
-                echo '<p style="color: red;">Falha ao enviar arquivo</p>';
+                
             }
         }
 
@@ -368,7 +375,7 @@ if (isset($_SESSION['logado'])) {
                                     }
                                     ?>
                                 </span>
-                                <img class="img-profile rounded-circle" src="<?=$linha['imagem']?>">
+                                <img class="img-profile rounded-circle" src="<?= $linha['imagem'] ?>">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -432,66 +439,82 @@ if (isset($_SESSION['logado'])) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <div class="row ml-2 mb-2 mt-2 card">
-                        <img width="50" src="./<?=$linha['imagem']?>" alt="..." class="ml-2 mb-2 mt-2">
-                        <p class="ml-2 mb-2 mt-2 lead">Nome do Usuário</p>
-                        <button class="btn btn-warning" onclick="abrirModalEditar()">Editar</button>
-                    </div>
-                </div>
-
-                <!----------------- Modal Editar --------------->
-                <div class="modal fade" id='modalEditar' tabindex="-1" role="dialog" aria-label="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Editar Usuário</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-floating mb-3">
-                                        <label>Imagem</label>
-                                        <img width="50" src="./<?=$linha['imagem']?>" alt="..." class="ml-2 mb-2 mt-2">
-                                        <input name="arquivo" type="file" class="form-control-file">
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" id="editarValor" name="valor" class="form-control">
-                                        <label>Nome de Usuário</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" id="editarQuantidade" name="quantidade" class="form-control">
-                                        <label>Descrição</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type='hidden' name='editar' value='editar'></input>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" onclick="fecharModalEditar()">Fechar</button>
-                                        <input type="submit" class="btn btn-primary" value="Salvar">
-                                    </div>
-                                </div>
-                            </form>
+                <div class="container">
+                    <div class="container row">
+                        <div class="col-11">
+                            <img class="d-block mx-auto img-thumbnail" width="200" src="./<?= $linha['imagem'] ?>" alt="">
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-warning" onclick="abrirModalEditar()">Editar</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                    <div class="container">
+                        <h6 class="display-6">Nome de Usuário</h6>
+                    </div>
+                    <div class="container">
+                        <h4 class="container text-dark display-4"><?= $linha['name'] ?></h4>
+                    </div>
+                    <div class="container">
+                        <h6 class="display-6">Descrição</h6>
+                    </div>
+                    <div class="container">
+                        <blockquote class="container text-dark blockquote"><?= $linha['descricao'] ?></blockquote>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+            </div>
+
+            <!----------------- Modal Editar --------------->
+            <div class="modal fade" id='modalEditar' tabindex="-1" role="dialog" aria-label="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Editar Usuário</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+                                    <label>Foto de Perfil</label>
+                                    <img width="75" src="./<?= $linha['imagem'] ?>" alt="..." class="ml-2 mb-2 mt-2">
+                                    <input name="arquivo" type="file" class="form-control-file">
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="editarValor" name="nomeUsuario" class="form-control">
+                                    <label>Nome de Usuário</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="editarQuantidade" name="descricao" class="form-control">
+                                    <label>Descrição</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type='hidden' name='editar' value='editar'></input>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick="fecharModalEditar()">Fechar</button>
+                                    <input type="submit" class="btn btn-primary" value="Salvar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <!-- <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2021</span>
+                </div>
+            </div>
+        </footer> -->
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -540,29 +563,29 @@ if (isset($_SESSION['logado'])) {
 
     <script>
         function abrirModalEditar(id) {
-        $("#modalEditar").modal("show");
+            $("#modalEditar").modal("show");
 
-        produto = document.getElementById("produtos" + id);
-        valor = document.getElementById("valor" + id);
-        quantidade = document.getElementById("quantidade" + id);
-        validade = document.getElementById("validade" + id);
+            produto = document.getElementById("produtos" + id);
+            valor = document.getElementById("valor" + id);
+            quantidade = document.getElementById("quantidade" + id);
+            validade = document.getElementById("validade" + id);
 
-        editarId = document.getElementById("editarId");
-        editarProduto = document.getElementById("editarProduto");
-        editarValor = document.getElementById("editarValor");
-        editarQuantidade = document.getElementById("editarQuantidade");
-        editarValidade = document.getElementById("editarValidade");
+            editarId = document.getElementById("editarId");
+            editarProduto = document.getElementById("editarProduto");
+            editarValor = document.getElementById("editarValor");
+            editarQuantidade = document.getElementById("editarQuantidade");
+            editarValidade = document.getElementById("editarValidade");
 
-        editarId.value = id;
-        editarProduto.value = produto.value;
-        editarValor.value = valor.value;
-        editarQuantidade.value = quantidade.value;
-        editarValidade.value = validade.value;
-    }
+            editarId.value = id;
+            editarProduto.value = produto.value;
+            editarValor.value = valor.value;
+            editarQuantidade.value = quantidade.value;
+            editarValidade.value = validade.value;
+        }
 
-    function fecharModalEditar() {
-        $("#modalEditar").modal("hide");
-    }
+        function fecharModalEditar() {
+            $("#modalEditar").modal("hide");
+        }
     </script>
 </body>
 
