@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Jan-2024 às 15:08
+-- Tempo de geração: 14-Jan-2024 às 17:38
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -19,7 +19,6 @@ SET time_zone = "+00:00";
 
 --
 -- Banco de dados: `id21624915_amber_live`
-
 --
 
 -- --------------------------------------------------------
@@ -85,7 +84,10 @@ INSERT INTO `seguidores` (`id_seguidor`, `id_seguido`) VALUES
 (13, 1),
 (14, 1),
 (14, 2),
-(13, 3);
+(13, 3),
+(14, 3),
+(14, 15),
+(14, 16);
 
 -- --------------------------------------------------------
 
@@ -96,28 +98,32 @@ INSERT INTO `seguidores` (`id_seguidor`, `id_seguido`) VALUES
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `name` varchar(110) NOT NULL,
+  `email` varchar(220) NOT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `imagem` varchar(220) DEFAULT NULL,
-  `email` varchar(220) NOT NULL,
-  `senha` varchar(110) NOT NULL
+  `senha` varchar(110) NOT NULL,
+  `descricao` text NOT NULL DEFAULT '<sem descrição>'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `name`, `created`, `modified`, `status`, `imagem`, `email`, `senha`) VALUES
-(1, 'Gaulês', '2023-11-27 10:54:33', '2024-01-09 01:55:28', 1, NULL, 'gaules@email.com', '1234'),
-(2, 'Alanzoka', '2023-11-27 10:54:33', '2023-11-27 14:54:33', 0, NULL, 'alanzoka@email.com', '1234'),
-(3, 'Quackity', '2023-11-28 10:55:34', '2024-01-09 01:56:55', 1, NULL, 'quackity@email.com', '1234'),
-(4, 'Joao Gameplays', '2023-11-27 10:55:34', '2023-11-27 14:55:34', 0, NULL, 'joaogameplays@email.com', '1234'),
-(5, 'EnzoCraft', '2023-11-27 10:56:13', '2023-11-27 14:56:13', 0, NULL, 'enzocraft@email.com', '1234'),
-(13, 'cris', '2024-01-09 01:34:46', '2024-01-09 01:34:46', 0, NULL, 'cris@email.com', '1234'),
-(14, 'manoel', '2024-01-09 02:02:23', '2024-01-11 08:35:46', 0, NULL, 'manoel@email.com', '1234'),
-(15, 'JessJess', '2024-01-10 11:14:20', '2024-01-10 11:14:20', 0, NULL, 'jess@email.com', '1234'),
-(16, 'Dilera', '2024-01-11 10:09:48', '2024-01-11 10:09:48', 0, NULL, 'dilera@email.com', '1234');
+INSERT INTO `usuarios` (`id`, `name`, `email`, `created`, `modified`, `status`, `imagem`, `senha`, `descricao`) VALUES
+(1, 'Gaulês', 'gaules@email.com', '2023-11-27 10:54:33', '2024-01-13 15:27:24', 0, 'imagens/65a2d60ca2ef4.png', '1234', ''),
+(2, 'Alanzoka', 'alanzoka@email.com', '2023-11-27 10:54:33', '2024-01-13 13:25:21', 0, NULL, '1234', ''),
+(3, 'Quackity', 'quackity@email.com', '2023-11-28 10:55:34', '2024-01-13 15:26:57', 1, 'imagens/65a2d5f16edd7.png', '1234', ''),
+(4, 'Joao Gameplays', 'joaogameplays@email.com', '2023-11-27 10:55:34', '2023-11-27 14:55:34', 0, NULL, '1234', ''),
+(5, 'EnzoCraft', 'enzocraft@email.com', '2023-11-27 10:56:13', '2023-11-27 14:56:13', 0, NULL, '1234', ''),
+(13, 'cris', 'cris@email.com', '2024-01-09 01:34:46', '2024-01-13 15:33:10', 0, 'imagens/65a2d76685ed6.png', '1234', ''),
+(14, 'manoel06', 'manoel@email.com', '2024-01-09 02:02:23', '2024-01-13 22:56:30', 0, 'imagens/65a33f4e5a8dc.png', '1234', 'My Description 2'),
+(15, 'JessJess', 'jess@email.com', '2024-01-10 11:14:20', '2024-01-13 15:28:20', 1, 'imagens/65a2d644d0da5.png', '1234', ''),
+(16, 'Dilera', 'dilera@email.com', '2024-01-11 10:09:48', '2024-01-11 21:17:22', 0, NULL, '1234', ''),
+(17, 'teste', 'teste@email.com', '2024-01-11 21:48:40', '2024-01-11 21:48:40', 0, NULL, '123', ''),
+(18, 'teste', 'teste2@email.com', '2024-01-11 21:59:59', '2024-01-11 21:59:59', 0, NULL, '123', ''),
+(19, '', '', '2024-01-13 14:55:08', '2024-01-13 14:55:08', 0, 'teste', '', '');
 
 --
 -- Índices para tabelas despejadas
@@ -170,7 +176,7 @@ ALTER TABLE `pacientes`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restrições para despejos de tabelas
