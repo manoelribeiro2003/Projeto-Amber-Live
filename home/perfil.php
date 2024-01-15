@@ -40,12 +40,28 @@ if (isset($_SESSION['logado'])) {
 
 if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === TRUE) {
-        if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
-            $descricao = $_POST['descricao'];
-            $newUserName = $_POST['nomeUsuario'];
 
-            $sql = "UPDATE usuarios SET descricao = '$descricao', name = '$newUserName' WHERE id = $id;";
-            $conn->query($sql);
+        if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
+            if (!empty($_POST['nomeUsuario']) ^ !empty($_POST['descricao'])) {
+                $sql = "UPDATE usuarios SET ";
+                if (!empty($_POST['nomeUsuario'])) {
+                    $newUserName = $_POST['nomeUsuario'];
+                    $newUserNameScaped = $conn->real_escape_string($newUserName);
+                    $sql .= "name = '$newUserNameScaped', ";
+                }
+                if (!empty($_POST['descricao'])) {
+                    $descricao = $_POST['descricao'];
+                    $descricaoScaped = $conn->real_escape_string($descricao);
+                    $sql .= "descricao = '$descricaoScaped',";
+                }
+                $final = substr($sql, -1);
+                if ($final === ',') {
+                    $sql = substr($sql, 0, -1);
+                }
+                $sql .= " WHERE id = $id";
+                echo($sql);
+                $conn->query($sql);
+            }
         }
 
 
