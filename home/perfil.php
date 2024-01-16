@@ -42,7 +42,7 @@ if (isset($_SESSION['logado'])) {
     if ($_SESSION['logado'] === TRUE) {
 
         if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
-            if (!empty($_POST['nomeUsuario']) ^ !empty($_POST['descricao'])) {
+            // if (!empty($_POST['nomeUsuario']) XOR !empty($_POST['descricao'])) {
                 $sql = "UPDATE usuarios SET ";
                 if (!empty($_POST['nomeUsuario'])) {
                     $newUserName = $_POST['nomeUsuario'];
@@ -60,8 +60,10 @@ if (isset($_SESSION['logado'])) {
                 }
                 $sql .= " WHERE id = $id";
                 echo ($sql);
-                $conn->query($sql);
-            }
+                if (!empty($_POST['nomeUsuario']) AND !empty($_POST['descricao'])) {
+                    $conn->query($sql);
+                }
+            // }
         }
 
 
