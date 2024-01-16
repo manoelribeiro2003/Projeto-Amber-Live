@@ -47,7 +47,7 @@ if (isset($_SESSION['logado'])) {
                 if (!empty($_POST['nomeUsuario'])) {
                     $newUserName = $_POST['nomeUsuario'];
                     $newUserNameScaped = $conn->real_escape_string($newUserName);
-                    $sql .= "name = '$newUserNameScaped', ";
+                    $sql .= "name = '$newUserNameScaped',";
                 }
                 if (!empty($_POST['descricao'])) {
                     $descricao = $_POST['descricao'];
@@ -59,7 +59,7 @@ if (isset($_SESSION['logado'])) {
                     $sql = substr($sql, 0, -1);
                 }
                 $sql .= " WHERE id = $id";
-                echo($sql);
+                echo ($sql);
                 $conn->query($sql);
             }
         }
@@ -456,7 +456,8 @@ if (isset($_SESSION['logado'])) {
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Configurações
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" hre
+                                f="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Lojinha
                                 </a>
@@ -510,7 +511,15 @@ if (isset($_SESSION['logado'])) {
                                 <div class="form-floating mb-3">
                                     <label>Foto de Perfil</label>
                                     <img width="75" src="./<?= $linha['imagem'] ?>" alt="..." class="ml-2 mb-2 mt-2">
-                                    <input name="arquivo" type="file" class="form-control-file">
+                                    <div class="custom-file">
+                                        <input name="arquivo" type="file" class="custom-file-input">
+                                    </div>
+
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile" name="arquivo">
+                                        <label class="custom-file-label" for="customFile">Escolher arquivo</label>
+                                    </div>
+
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="text" id="editarValor" name="nomeUsuario" class="form-control">
