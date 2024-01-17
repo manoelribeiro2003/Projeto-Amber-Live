@@ -103,6 +103,15 @@ if (isset($_SESSION['logado'])) {
     }
 }
 
+if (isset($_POST['idEntrarAoVivo'])) {
+   $id = $_POST['idEntrarAoVivo'];
+   $sql = "SELECT * FROM usuarios WHERE id = $id";
+   $conn->query($sql);
+   if ($conn->affected_rows) {
+    # code...
+   }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -540,6 +549,12 @@ if (isset($_SESSION['logado'])) {
                                 <label class="custom-file-label" for="customFile"></label>
                             </div>
                         </div>
+                        <div class="col-1">
+                            <form method="post" action="">
+                                <button type="submit" class="btn btn-danger">Entrar ao Vivo!</button>
+                                <input type="hidden" value="<?=$linha['id']?>" name="idEntrarAoVivo">
+                            </form>
+                        </div>
                     </div>
 
                     <div class="container">
@@ -667,6 +682,7 @@ if (isset($_SESSION['logado'])) {
 
     <script>
         function abrirModalEditar(id) {
+            //------------  MODAL EDITAR  ------------
             $("#modalEditar").modal("show");
 
             produto = document.getElementById("produtos" + id);
@@ -690,6 +706,9 @@ if (isset($_SESSION['logado'])) {
         function fecharModalEditar() {
             $("#modalEditar").modal("hide");
         }
+
+        //------------  ENTRAR AO VIVO  ------------
+
     </script>
 </body>
 
