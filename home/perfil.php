@@ -172,6 +172,31 @@ if (isset($_POST['idEntrarAoVivo'])) {
                     margin-bottom: 0px !important;
 
                 }
+                .button {
+                    background-color: #FF7F00; 
+                    border: none;
+                    color: white;
+                    padding: 16px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    transition-duration: 0.4s;
+                    cursor: pointer;
+                }
+
+                .button1 {
+                    background-color: white; 
+                    color: black; 
+                    border: 2px solid #FF7F00;
+                }
+
+                .button1:hover {
+                    background-color: #FF7F00;
+                    color: white;
+                }
+
             </style>
 
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
@@ -492,7 +517,7 @@ if (isset($_POST['idEntrarAoVivo'])) {
                             <img class="d-block mx-auto img-thumbnail" width="200" src="./<?= $linha['imagem'] ?>" alt="">
                         </div>
                         <div class="col-1">
-                            <button class="btn btn-warning" onclick="abrirModalEditar()">Editar</button>
+                            <button class="button button1" onclick="abrirModalEditar()">Editar</button>
                         </div>
                         <div class="col-1">
                             <form method="post" action="">
