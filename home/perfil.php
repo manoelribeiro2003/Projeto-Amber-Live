@@ -43,26 +43,26 @@ if (isset($_SESSION['logado'])) {
 
         if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
             // if (!empty($_POST['nomeUsuario']) XOR !empty($_POST['descricao'])) {
-                $sql = "UPDATE usuarios SET ";
-                if (!empty($_POST['nomeUsuario'])) {
-                    $newUserName = $_POST['nomeUsuario'];
-                    $newUserNameScaped = $conn->real_escape_string($newUserName);
-                    $sql .= "name = '$newUserNameScaped',";
-                }
-                if (!empty($_POST['descricao'])) {
-                    $descricao = $_POST['descricao'];
-                    $descricaoScaped = $conn->real_escape_string($descricao);
-                    $sql .= "descricao = '$descricaoScaped',";
-                }
-                $final = substr($sql, -1);
-                if ($final === ',') {
-                    $sql = substr($sql, 0, -1);
-                }
-                $sql .= " WHERE id = $id";
-                echo ($sql);
-                if (!empty($_POST['nomeUsuario']) AND !empty($_POST['descricao'])) {
-                    $conn->query($sql);
-                }
+            $sql = "UPDATE usuarios SET ";
+            if (!empty($_POST['nomeUsuario'])) {
+                $newUserName = $_POST['nomeUsuario'];
+                $newUserNameScaped = $conn->real_escape_string($newUserName);
+                $sql .= "name = '$newUserNameScaped',";
+            }
+            if (!empty($_POST['descricao'])) {
+                $descricao = $_POST['descricao'];
+                $descricaoScaped = $conn->real_escape_string($descricao);
+                $sql .= "descricao = '$descricaoScaped',";
+            }
+            $final = substr($sql, -1);
+            if ($final === ',') {
+                $sql = substr($sql, 0, -1);
+            }
+            $sql .= " WHERE id = $id";
+            echo ($sql);
+            if (!empty($_POST['nomeUsuario']) and !empty($_POST['descricao'])) {
+                $conn->query($sql);
+            }
             // }
         }
 
@@ -163,8 +163,9 @@ if (isset($_SESSION['logado'])) {
                     margin-bottom: 0px !important;
 
                 }
+
                 .button {
-                    background-color: #FF7F00; 
+                    background-color: #FF7F00;
                     border: none;
                     color: white;
                     padding: 16px 32px;
@@ -178,8 +179,8 @@ if (isset($_SESSION['logado'])) {
                 }
 
                 .button1 {
-                    background-color: white; 
-                    color: black; 
+                    background-color: white;
+                    color: black;
                     border: 2px solid #FF7F00;
                 }
 
@@ -188,6 +189,32 @@ if (isset($_SESSION['logado'])) {
                     color: white;
                 }
 
+                .circulo {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    float: left;
+                    margin: 15px;
+                    transition: 0.3s ease;
+                }
+
+                .circulo1:hover {
+                    transform: rotateY(180deg);
+                }
+
+                .bt {
+                    position: absolute;
+                    left: 200%;
+                    top: 70%;
+                    border-radius: 100%;
+                }
+
+                .bt2 {
+                    width: 10px;
+                    height: 10px;
+                    width: 10px;
+                }
             </style>
 
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
@@ -504,13 +531,17 @@ if (isset($_SESSION['logado'])) {
                 <!-- Begin Page Content -->
                 <div class="container">
                     <div class="container row">
-                        <div class="col-11">
-                            <img class="d-block mx-auto img-thumbnail" width="200" src="./<?= $linha['imagem'] ?>" alt="">
+                        <div class="circulo circulo1">
+                            <img class="d-block mx-auto img-thumbnail" src="./<?= $linha['imagem'] ?>" alt="">
                         </div>
-                        <div class="col-1">
-                            <button class="button button1" onclick="abrirModalEditar()">Editar</button>
+                        <div class="box">
+                            <div class="custom-file">
+                                <input type="file" class="bt bt2 custom-file-input" id="customFile" name="arquivo">
+                                <label class="custom-file-label" for="customFile"></label>
+                            </div>
                         </div>
                     </div>
+
                     <div class="container">
                         <h6 class="display-6">Nome de Usuário</h6>
                     </div>
@@ -522,6 +553,9 @@ if (isset($_SESSION['logado'])) {
                     </div>
                     <div class="container">
                         <blockquote class="container text-dark blockquote"><?= $linha['descricao'] ?></blockquote>
+                    </div>
+                    <div class="col-1">
+                        <button class="button button1" onclick="abrirModalEditar()">Editar</button>
                     </div>
                 </div>
             </div>
@@ -535,7 +569,7 @@ if (isset($_SESSION['logado'])) {
                                 <h5 class="modal-title" id="exampleModalLongTitle">Editar Usuário</h5>
                             </div>
                             <div class="modal-body">
-                                <div class="form-floating mb-3">
+                                <!--<div class="form-floating mb-3">
                                     <label>Foto de Perfil</label>
                                     <img width="75" src="./<?= $linha['imagem'] ?>" alt="..." class="ml-2 mb-2 mt-2">
                                     <div class="custom-file">
@@ -546,8 +580,7 @@ if (isset($_SESSION['logado'])) {
                                         <input type="file" class="custom-file-input" id="customFile" name="arquivo">
                                         <label class="custom-file-label" for="customFile">Escolher arquivo</label>
                                     </div>
-
-                                </div>
+                                </div>-->
                                 <div class="form-floating mb-3">
                                     <input type="text" id="editarValor" name="nomeUsuario" class="form-control">
                                     <label>Nome de Usuário</label>
