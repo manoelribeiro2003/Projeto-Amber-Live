@@ -75,7 +75,7 @@ if (isset($_POST['nome_usuario']) || isset($_POST['senha']) || isset($_POST['ema
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-4 d-none d-lg-block "><img src="../imagens/Pin-HappyAnim.gif" width="400" height="400"></div>
+                    <div class="col-lg-4 d-none d-lg-block "><img src="./imagens/Pin-HappyAnim.gif" width="400" height="400"></div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">

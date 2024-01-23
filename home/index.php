@@ -119,19 +119,6 @@ if (isset($_SESSION['logado'])) {
                 }
             }
             ?>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="gaules.php">
-                    <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
-                    <span>Gaules</span>
-                </a>
-            </li> -->
-
-            <!-- Divider -->
-
-
-
             <!--------------------------------- STREAMERS OFFLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
@@ -334,16 +321,21 @@ if (isset($_SESSION['logado'])) {
                         <li class="nav-item dropdown no-arrow">
                             <?php isset($linha) ? $logado = TRUE : $logado = FALSE; ?>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                    <?php
-                                    if ($logado) {
-                                        echo ($linha['name']);
-                                    } else {
-                                        echo ('Acessar');
-                                    }
-                                    ?>
-                                </span>
-                                <img class="img-profile rounded-circle" src="<?=$linha['imagem']?>">
+
+                                <?php
+                                if ($logado) {
+                                    echo ("
+                                    <span class='mr-2 d-none d-lg-inline text-gray-600 small'>$linha[name]</span>
+                                    <img class='img-profile rounded-circle' src='$linha[imagem]'>
+                                    ");
+                                } else {
+                                    echo ("
+                                    <span class='mr-2 d-none d-lg-inline text-gray-600 small'>Acessar</span>
+                                    <img class='img-profile rounded-circle' src='./img/undraw_profile.svg'>
+                                    ");
+                                }
+                                ?>
+                                
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

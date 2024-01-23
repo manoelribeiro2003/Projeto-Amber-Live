@@ -54,7 +54,7 @@ if (!isset($_SESSION['logado'])) {
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-4 d-none d-lg-block "><img src="../imagens/amber.gif" width="400" height="400"></div>
+                            <div class="col-lg-4 d-none d-lg-block "><img src="./imagens/amber.gif" width="400" height="400"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -92,22 +92,13 @@ if (!isset($_SESSION['logado'])) {
                                             </div>
                                         </div>
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Entrar">
-
-
-                                        <!-- <hr> -->
-                                        <!-- <a href="./index.php" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="./index.php" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a> -->
                                     </form>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Esqueceu a senha?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Crie uma conta!</a>
+                                        <a class="small" href="./register.php">Crie uma conta!</a>
                                     </div>
                                 </div>
                             </div>
