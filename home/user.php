@@ -94,10 +94,9 @@ if (isset($_POST['idStreamer'])) {
     } else {
         header('Location:./index.php');
     }
-}else{
+} else {
     header('Location:./index.php');
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -119,6 +118,18 @@ if (isset($_POST['idStreamer'])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        .streamerButton {
+            background-color: transparent;
+            padding: 5px 10px !important;
+            border: none;
+            font-size: 15px;
+            margin-top: 10px;
+            margin-bottom: 0px !important;
+        }
+    </style>
 
 </head>
 
@@ -147,18 +158,6 @@ if (isset($_POST['idStreamer'])) {
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Lives</span></a>
             </li>
-
-            <style>
-                .streamerButton {
-                    background-color: transparent;
-                    padding: 5px 10px !important;
-                    border: none;
-                    font-size: 15px;
-                    margin-top: 10px;
-                    margin-bottom: 0px !important;
-
-                }
-            </style>
 
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
@@ -445,23 +444,6 @@ if (isset($_POST['idStreamer'])) {
                                         ');
                                 }
                                 ?>
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Configurações
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Lojinha
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Sair
-                                </a> -->
                             </div>
                         </li>
 
@@ -469,25 +451,11 @@ if (isset($_POST['idStreamer'])) {
 
                 </nav>
                 <!-- End of Topbar -->
-                <?php ?>
-                <!-- Begin Page Content -->
-                <div class="container">
-                    <div class="container row">
-                        <div class="col-12">
-                            <img class="d-block mx-auto img-thumbnail" width="200" src="./<?= $streamer['imagem'] ?>" alt="">
-                        </div>
-                    </div>
-                    <div class="container">
-                        <h6 class="display-6">Nome de Usuário</h6>
-                    </div>
-                    <div class="container">
-                        <h4 class="container text-dark display-4"><?= $streamer['name'] ?></h4>
-                    </div>
-                    <div class="container">
-                        <h6 class="display-6">Descrição</h6>
-                    </div>
-                    <div class="container">
-                        <blockquote class="container text-dark blockquote"><?= $streamer['descricao'] ?></blockquote>
+
+                <div class="background">
+                    <div class="">
+                        <div class="teste">teste </div>
+                        <img class="profile profile-image teste" width="200" src="./<?= $streamer['imagem'] ?>" alt="">
                     </div>
                 </div>
             </div>

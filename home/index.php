@@ -2,11 +2,13 @@
 include_once('./php/conexao.php');
 
 session_start();
+
 if (isset($_SESSION['logado'])) {
+
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
-    } elseif ($_SESSION['logado'] == TRUE) {
 
+    } elseif ($_SESSION['logado'] == TRUE) {
         $id = $_SESSION['id'];
         $sql = "SELECT * FROM usuarios WHERE id = '$id'";
         $resultado = $conn->query($sql);
