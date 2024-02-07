@@ -3,35 +3,34 @@ include_once('./php/conexao.php');
 
 session_start();
 if (isset($_SESSION['logado'])) {
+
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
-    } elseif ($_SESSION['logado'] == TRUE) {
-
+        $sql_recomendados = "SELECT * FROM usuarios WHERE status = 1";
+        $result_recomendados = $conn->query($sql_recomendados);
+    } elseif ($_SESSION['logado'] === TRUE) {
         $id = $_SESSION['id'];
         $sql = "SELECT * FROM usuarios WHERE id = '$id'";
         $resultado = $conn->query($sql);
         $linha = mysqli_fetch_array($resultado);
-
         $sql_streamers_online = "SELECT * FROM usuarios 
                                 WHERE id IN (SELECT id_seguido FROM seguidores
                                 WHERE id_seguidor = $id) AND status = TRUE;
                                 ";
-
         $sql_streamers_offline = "SELECT * FROM usuarios 
                                 WHERE id IN (SELECT id_seguido FROM seguidores
                                 WHERE id_seguidor = $id) AND status = FALSE;
                                 ";
-
         $result_online = $conn->query($sql_streamers_online);
         $result_offline = $conn->query($sql_streamers_offline);
-
         // while ($linha_streamer_online = mysqli_fetch_assoc($result_online)) {
         //     echo $linha_streamer_online['name'];
         // }
-
+    } else {
+        $_SESSION['logado'] = FALSE;
+        $sql_recomendados = "SELECT * FROM usuarios WHERE status = 1";
+        $result_recomendados = $conn->query($sql_recomendados);
     }
-} else {
-    $_SESSION['logado'] = FALSE;
 }
 
 ?>
@@ -96,8 +95,8 @@ if (isset($_SESSION['logado'])) {
                 }
             </style>
 
-            <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
+            //--------------------------------- STREAMERS ONLINE ------------------------------->
             if ($_SESSION['logado'] === TRUE) {
                 echo ("
                 <div class='sidebar-heading'>
@@ -106,22 +105,19 @@ if (isset($_SESSION['logado'])) {
                 ");
                 foreach ($result_online as $streamer_online) {
                     echo "
-                <form method='post' action='./user.php'>
-                    <li class='nav-item'>
-                        <button type='submit' class='nav-link collapsed streamerButton'>
-                            <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                            <span>$streamer_online[name]</span>
-                            <input name='idStreamer' type='hidden' value='$streamer_online[id]'>
-                        </button>
-                    </li>
-                </form>
-                ";
+                    <form method='post' action='./user.php'>
+                        <li class='nav-item'>
+                            <button type='submit' class='nav-link collapsed streamerButton'>
+                                <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                                <span>$streamer_online[name]</span>
+                                <input name='idStreamer' type='hidden' value='$streamer_online[id]'>
+                            </button>
+                        </li>
+                    </form>
+                    ";
                 }
-            }
-            ?>
-            <!--------------------------------- STREAMERS OFFLINE ------------------------------->
-            <?php
-            if ($_SESSION['logado'] === TRUE) {
+
+                //--------------------------------- STREAMERS OFFLINE ------------------------------->
                 echo ("
                 <div class='sidebar-heading'>
                     Streamers Offline
@@ -140,8 +136,27 @@ if (isset($_SESSION['logado'])) {
                 </form>
                 ";
                 }
+            //--------------------------------- STREAMERS RECOMENDADOS ------------------------------->
+            } else if ($_SESSION['logado'] === FALSE) {
+                echo ("
+                <div class='sidebar-heading'>
+                    Streamers Recomendados
+                </div>
+                ");
+                foreach ($result_recomendados as $streamer_recomendado) {
+                    echo "
+                    <form method='post' action='./user.php'>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_recomendado[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_recomendado[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_recomendado[id]'>
+                        </button>
+                    </li>
+                </form>
+                ";
+                }
             }
-
             ?>
 
             <!-- Divider -->
@@ -335,7 +350,7 @@ if (isset($_SESSION['logado'])) {
                                     ");
                                 }
                                 ?>
-                                
+
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -373,23 +388,6 @@ if (isset($_SESSION['logado'])) {
                                         ');
                                 }
                                 ?>
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Configurações
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Lojinha
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Sair
-                                </a> -->
                             </div>
                         </li>
 
@@ -409,12 +407,6 @@ if (isset($_SESSION['logado'])) {
                     <div class="container">
                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                                <!-- <div class="carousel-item active">
-                                        <iframe width="1200" height="562.50"
-                                            src="https://player.twitch.tv/?channel=gaules&parent=www.example.com"
-                                            frameborder="0" allowfullscreen="true" scrolling="no">
-                                        </iframe>
-                                    </div> -->
                                 <div class="carousel-item active">
                                     <iframe width="1200" height="562.50" src="https://www.youtube.com/embed/5yfkGVYrcMc?si=JQuKuGiRRCTDQ3uX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
@@ -437,20 +429,7 @@ if (isset($_SESSION['logado'])) {
                                 <span class="sr-only">Próximo</span>
                             </a>
                         </div>
-
-                        <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/5yfkGVYrcMc?si=JQuKuGiRRCTDQ3uX" title="YouTube video player"
-                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-                         <iframe width="560" height="315" src="https://www.youtube.com/embed/47BxjnFTwcQ?si=sr_WC-KhXICfzbqJ" title="YouTube video player" frameborder="0" 
-                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                         <br>
-                         <iframe width="560" height="315" src="https://www.youtube.com/embed/1rcSyN74BY0?si=HKjki2y_HQJS9p33" title="YouTube video player" frameborder="0" 
-                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                         <iframe width="560" height="315" src="https://www.youtube.com/embed/NcHyE_N1QDI?si=MVd4W7L2GWOd3ylb" title="YouTube video player" frameborder="0" 
-                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
                     </div>
-
-
                 </div>
                 <!-- /.container-fluid -->
 

@@ -125,7 +125,7 @@ if (isset($_POST['idEntrarAoVivo'])) {
     <meta name="author" content="">
     <link rel="icon" href="../imagens/Pin-Happy.png">
 
-    <title>Amber Live</title>
+    <title><?=$linha['name']?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

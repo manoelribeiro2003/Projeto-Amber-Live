@@ -3,11 +3,12 @@ include_once('./php/conexao.php');
 
 session_start();
 if (isset($_SESSION['logado'])) {
+
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
-        header("Location:./index.php");
+        $sql_recomendados = "SELECT * FROM usuarios WHERE status = 1";
+        $result_recomendados = $conn->query($sql_recomendados);
     } elseif ($_SESSION['logado'] == TRUE) {
-
         $id = $_SESSION['id'];
         $sql = "SELECT * FROM usuarios WHERE id = '$id'";
         $resultado = $conn->query($sql);
@@ -31,11 +32,9 @@ if (isset($_SESSION['logado'])) {
         // }
 
     } elseif ($_SESSION['logado'] === FALSE) {
-        header('Location:./index.php');
+        $sql_recomendados = "SELECT * FROM usuarios WHERE status = 1";
+        $result_recomendados = $conn->query($sql_recomendados);
     }
-} else {
-    $_SESSION['logado'] = FALSE;
-    header('Location:./index.php');
 }
 
 if (isset($_SESSION['logado'])) {
@@ -94,7 +93,7 @@ if (isset($_POST['idStreamer'])) {
     } else {
         header('Location:./index.php');
     }
-}else{
+} else {
     header('Location:./index.php');
 }
 
@@ -111,7 +110,7 @@ if (isset($_POST['idStreamer'])) {
     <meta name="author" content="">
     <link rel="icon" href="../imagens/Pin-Happy.png">
 
-    <title>Amber Live</title>
+    <title><?=$streamer['name']?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -160,8 +159,8 @@ if (isset($_POST['idStreamer'])) {
                 }
             </style>
 
-            <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
+            //--------------------------------- STREAMERS ONLINE ------------------------------->
             if ($_SESSION['logado'] === TRUE) {
                 echo ("
                 <div class='sidebar-heading'>
@@ -170,35 +169,19 @@ if (isset($_POST['idStreamer'])) {
                 ");
                 foreach ($result_online as $streamer_online) {
                     echo "
-                <form method='post' action='./user.php'>
-                    <li class='nav-item'>
-                        <button type='submit' class='nav-link collapsed streamerButton'>
-                            <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
-                            <span>$streamer_online[name]</span>
-                            <input name='idStreamer' type='hidden' value='$streamer_online[id]'>
-                        </button>
-                    </li>
-                </form>
-                ";
+                    <form method='post' action='./user.php'>
+                        <li class='nav-item'>
+                            <button type='submit' class='nav-link collapsed streamerButton'>
+                                <img src='./$streamer_online[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                                <span>$streamer_online[name]</span>
+                                <input name='idStreamer' type='hidden' value='$streamer_online[id]'>
+                            </button>
+                        </li>
+                    </form>
+                    ";
                 }
-            }
-            ?>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="gaules.php">
-                    <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
-                    <span>Gaules</span>
-                </a>
-            </li> -->
-
-            <!-- Divider -->
-
-
-
-            <!--------------------------------- STREAMERS OFFLINE ------------------------------->
-            <?php
-            if ($_SESSION['logado'] === TRUE) {
+                //--------------------------------- STREAMERS OFFLINE ------------------------------->
                 echo ("
                 <div class='sidebar-heading'>
                     Streamers Offline
@@ -217,8 +200,27 @@ if (isset($_POST['idStreamer'])) {
                 </form>
                 ";
                 }
+                //--------------------------------- STREAMERS RECOMENDADOS ------------------------------->
+            } else if ($_SESSION['logado'] === FALSE) {
+                echo ("
+                <div class='sidebar-heading'>
+                    Streamers Recomendados
+                </div>
+                ");
+                foreach ($result_recomendados as $streamer_recomendado) {
+                    echo "
+                    <form method='post' action='./user.php'>
+                    <li class='nav-item'>
+                        <button type='submit' class='nav-link collapsed streamerButton'>
+                            <img src='./$streamer_recomendado[imagem]' alt='' style='width: 30px; border-radius: 15px;'>
+                            <span>$streamer_recomendado[name]</span>
+                            <input name='idStreamer' type='hidden' value='$streamer_recomendado[id]'>
+                        </button>
+                    </li>
+                </form>
+                ";
+                }
             }
-
             ?>
 
             <!-- Divider -->
@@ -396,18 +398,23 @@ if (isset($_POST['idStreamer'])) {
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <?php isset($linha) ? $logado = TRUE : $logado = FALSE; ?>
+                        <?php isset($linha) ? $logado = TRUE : $logado = FALSE; ?>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                    <?php
-                                    if ($logado) {
-                                        echo ($linha['name']);
-                                    } else {
-                                        echo ('Acessar');
-                                    }
-                                    ?>
-                                </span>
-                                <img class="img-profile rounded-circle" src="<?= $linha['imagem'] ?>">
+
+                                <?php
+                                if ($logado) {
+                                    echo ("
+                                    <span class='mr-2 d-none d-lg-inline text-gray-600 small'>$linha[name]</span>
+                                    <img class='img-profile rounded-circle' src='$linha[imagem]'>
+                                    ");
+                                } else {
+                                    echo ("
+                                    <span class='mr-2 d-none d-lg-inline text-gray-600 small'>Acessar</span>
+                                    <img class='img-profile rounded-circle' src='./img/undraw_profile.svg'>
+                                    ");
+                                }
+                                ?>
+
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
