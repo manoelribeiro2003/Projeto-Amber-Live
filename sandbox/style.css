@@ -1,0 +1,63 @@
+body {
+    background-color: white;
+}
+
+.container {
+    width: 200px;
+    /* Largura do contêiner */
+    height: 100px;
+    /* Altura do contêiner */
+    overflow: hidden;
+    /* Evita que o botão ultrapasse o contêiner */
+}
+
+.botao {
+    width: 100%;
+    /* Garante que o botão preencha o contêiner */
+    height: 100%;
+    /* Garante que o botão preencha o contêiner */
+    padding: 10px;
+    /* Adiciona preenchimento para melhor visualização */
+    background-color: #007bff;
+    /* Cor de fundo do botão */
+    color: #fff;
+    /* Cor do texto do botão */
+    border: none;
+    /* Remove a borda do botão */
+    cursor: pointer;
+    /* Mostra que o cursor é clicável */
+    font-size: 16px;
+    /* Tamanho da fonte do botão */
+    transition: transform 0.3s ease;
+    /* Transição suave de 0.3 segundos */
+}
+
+.container:hover .botao {
+    transform: scale(1.1);
+    /* Aplica um efeito de zoom no conteúdo interno do botão */
+}
+
+
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 80px;
+    transition: transform 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    transform: scale(1.1);
+    /* Aumenta o tamanho do botão em 10% */
+}
+#container-botao{
+    width: 200px;
+    height: 100px;
+    overflow: hidden;
+}

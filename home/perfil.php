@@ -104,12 +104,12 @@ if (isset($_SESSION['logado'])) {
 }
 
 if (isset($_POST['idEntrarAoVivo'])) {
-   $id = $_POST['idEntrarAoVivo'];
-   $sql = "SELECT * FROM usuarios WHERE id = $id";
-   $conn->query($sql);
-   if ($conn->affected_rows) {
-    # code...
-   }
+    $id = $_POST['idEntrarAoVivo'];
+    $sql = "SELECT * FROM usuarios WHERE id = $id";
+    $conn->query($sql);
+    if ($conn->affected_rows) {
+        # code...
+    }
 }
 
 ?>
@@ -125,14 +125,16 @@ if (isset($_POST['idEntrarAoVivo'])) {
     <meta name="author" content="">
     <link rel="icon" href="../imagens/Pin-Happy.png">
 
-    <title><?=$linha['name']?></title>
+    <title><?= $linha['name'] ?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
 </head>
 
@@ -142,7 +144,7 @@ if (isset($_POST['idEntrarAoVivo'])) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-image: linear-gradient(red, yellow);">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-image: linear-gradient(#F28066, #FEEC32);">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="./index.php">
@@ -162,69 +164,7 @@ if (isset($_POST['idEntrarAoVivo'])) {
                     <span>Lives</span></a>
             </li>
 
-            <style>
-                .streamerButton {
-                    background-color: transparent;
-                    padding: 5px 10px !important;
-                    border: none;
-                    font-size: 15px;
-                    margin-top: 10px;
-                    margin-bottom: 0px !important;
 
-                }
-
-                .button {
-                    background-color: #FF7F00;
-                    border: none;
-                    color: white;
-                    padding: 16px 32px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;
-                    margin: 4px 2px;
-                    transition-duration: 0.4s;
-                    cursor: pointer;
-                }
-
-                .button1 {
-                    background-color: white;
-                    color: black;
-                    border: 2px solid #FF7F00;
-                }
-
-                .button1:hover {
-                    background-color: #FF7F00;
-                    color: white;
-                }
-
-                .circulo {
-                    width: 150px;
-                    height: 150px;
-                    border-radius: 50%;
-                    overflow: hidden;
-                    float: left;
-                    margin: 15px;
-                    transition: 0.3s ease;
-                }
-
-                .circulo1:hover {
-                    transform: rotateY(180deg);
-                }
-
-                .bt {
-                    position: absolute;
-                    left: 200%;
-                    top: 70%;
-                    border-radius: 100%;
-                }
-
-                .bt2 {
-                    width: 10px;
-                    height: 10px;
-                    width: 10px;
-                }
-            </style>
 
             <!--------------------------------- STREAMERS ONLINE ------------------------------->
             <?php
@@ -249,19 +189,6 @@ if (isset($_POST['idEntrarAoVivo'])) {
                 }
             }
             ?>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="gaules.php">
-                    <img src="../imagens/gaules.png" alt="" style="width: 30px; border-radius: 15px;">
-                    <span>Gaules</span>
-                </a>
-            </li> -->
-
-            <!-- Divider -->
-
-
-
             <!--------------------------------- STREAMERS OFFLINE ------------------------------->
             <?php
             if ($_SESSION['logado'] === TRUE) {
@@ -511,24 +438,6 @@ if (isset($_POST['idEntrarAoVivo'])) {
                                         ');
                                 }
                                 ?>
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Configurações
-                                </a>
-                                <a class="dropdown-item" hre
-                                f="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Lojinha
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Sair
-                                </a> -->
                             </div>
                         </li>
 
@@ -537,100 +446,48 @@ if (isset($_POST['idEntrarAoVivo'])) {
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container">
-                    <div class="container row">
-                        <div class="circulo circulo1">
-                            <img class="d-block mx-auto img-thumbnail" src="./<?= $linha['imagem'] ?>" alt="">
-                        </div>
-                        <div class="box">
-                            <div class="custom-file">
-                                <input type="file" class="bt bt2 custom-file-input" id="customFile" name="arquivo">
-                                <label class="custom-file-label" for="customFile"></label>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <form method="post" action="">
-                                <button type="submit" class="btn btn-danger">Entrar ao Vivo!</button>
-                                <input type="hidden" value="<?=$linha['id']?>" name="idEntrarAoVivo">
-                            </form>
-                        </div>
-                    </div>
 
-                    <div class="container">
-                        <h6 class="display-6">Nome de Usuário</h6>
-                    </div>
-                    <div class="container">
-                        <h4 class="container text-dark display-4"><?= $linha['name'] ?></h4>
-                    </div>
-                    <div class="container">
-                        <h6 class="display-6">Descrição</h6>
-                    </div>
-                    <div class="container">
-                        <blockquote class="container text-dark blockquote"><?= $linha['descricao'] ?></blockquote>
-                    </div>
-                    <div class="col-1">
-                        <button class="button button1" onclick="abrirModalEditar()">Editar</button>
+                <!-- Begin Page Content -->
+                <style>
+                    .perfil {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .foto-perfil {
+                        width: 150 !important;
+                        height: 150px !important;
+                        border-radius: 50% !important;
+                        /* Bordas arredondadas */
+                        margin-right: 20px !important;
+                        margin-left: 50px !important;
+                        /* Espaçamento entre a imagem e o texto */
+                    }
+
+                    .info {
+                        flex-grow: 1;
+                        /* Expande para ocupar o espaço restante */
+                    }
+                </style>
+                <div class="perfil">
+                    <img class="foto-perfil" src="<?= $linha['imagem'] ?>" alt="Foto de Perfil">
+                    <div class="info">
+                        <h1><?= $linha['name'] ?></h1>
+                        <p><?= $linha['descricao'] ?></p>
                     </div>
                 </div>
+
+
+
+
+                <!-- End Page Content -->
+
+
+
             </div>
 
             <!----------------- Modal Editar --------------->
-            <div class="modal fade" id='modalEditar' tabindex="-1" role="dialog" aria-label="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Editar Usuário</h5>
-                            </div>
-                            <div class="modal-body">
-                                <!--<div class="form-floating mb-3">
-                                    <label>Foto de Perfil</label>
-                                    <img width="75" src="./<?= $linha['imagem'] ?>" alt="..." class="ml-2 mb-2 mt-2">
-                                    <div class="custom-file">
-                                        <input name="arquivo" type="file" class="custom-file-input">
-                                    </div>
-
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile" name="arquivo">
-                                        <label class="custom-file-label" for="customFile">Escolher arquivo</label>
-                                    </div>
-                                </div>-->
-                                <div class="form-floating mb-3">
-                                    <input type="text" id="editarValor" name="nomeUsuario" class="form-control">
-                                    <label>Nome de Usuário</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" id="editarQuantidade" name="descricao" class="form-control">
-                                    <label>Descrição</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type='hidden' name='editar' value='editar'></input>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" onclick="fecharModalEditar()">Fechar</button>
-                                    <input type="submit" class="btn btn-primary" value="Salvar">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- /.container-fluid -->
-
         </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <!-- <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2021</span>
-                </div>
-            </div>
-        </footer> -->
-        <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -707,8 +564,9 @@ if (isset($_POST['idEntrarAoVivo'])) {
             $("#modalEditar").modal("hide");
         }
 
-        //------------  ENTRAR AO VIVO  ------------
 
+
+        //------------  ENTRAR AO VIVO  ------------
     </script>
 </body>
 

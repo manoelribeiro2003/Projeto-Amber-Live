@@ -1,15 +1,16 @@
 <?php
 include_once('./php/conexao.php');
-
 session_start();
+
 if (isset($_SESSION['logado'])) {
 
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
         $sql_recomendados = "SELECT * FROM usuarios WHERE status = 1";
         $result_recomendados = $conn->query($sql_recomendados);
-    } elseif ($_SESSION['logado'] == TRUE) {
+    } elseif ($_SESSION['logado'] === TRUE) {
         $id = $_SESSION['id'];
+
         $sql = "SELECT * FROM usuarios WHERE id = '$id'";
         $resultado = $conn->query($sql);
         $linha = mysqli_fetch_array($resultado);
@@ -18,12 +19,10 @@ if (isset($_SESSION['logado'])) {
                                 WHERE id IN (SELECT id_seguido FROM seguidores
                                 WHERE id_seguidor = $id) AND status = TRUE;
                                 ";
-
         $sql_streamers_offline = "SELECT * FROM usuarios 
                                 WHERE id IN (SELECT id_seguido FROM seguidores
                                 WHERE id_seguidor = $id) AND status = FALSE;
                                 ";
-
         $result_online = $conn->query($sql_streamers_online);
         $result_offline = $conn->query($sql_streamers_offline);
 
@@ -34,53 +33,6 @@ if (isset($_SESSION['logado'])) {
     } elseif ($_SESSION['logado'] === FALSE) {
         $sql_recomendados = "SELECT * FROM usuarios WHERE status = 1";
         $result_recomendados = $conn->query($sql_recomendados);
-    }
-}
-
-if (isset($_SESSION['logado'])) {
-    if ($_SESSION['logado'] === TRUE) {
-        if (isset($_POST['nomeUsuario']) && isset($_POST['descricao'])) {
-            $descricao = $_POST['descricao'];
-            $newUserName = $_POST['nomeUsuario'];
-
-            $sql = "UPDATE usuarios SET descricao = '$descricao', name = '$newUserName' WHERE id = $id;";
-            $conn->query($sql);
-        }
-
-
-        if (isset($_FILES['arquivo'])) {
-            $arquivo = $_FILES['arquivo'];
-            $nomeDoArquivo =  $arquivo['name'];
-            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            if ($extensao == 'jpg' || $extensao == 'png') {
-                if ($arquivo['error']) {
-                    die('Falha ao enviar arquivo');
-                } else {
-                    $DoisMegaBytes = 2097152;
-                    if ($arquivo['size'] > $DoisMegaBytes) {
-                        die('Arquivo muito grande! Max: 2MB.');
-                    } else {
-                        $pasta = 'imagens/';
-
-                        $novoNomeDoArquivo = uniqid();
-
-
-                        $path = $pasta . $novoNomeDoArquivo . '.' . $extensao;
-                        $deu_certo = move_uploaded_file($arquivo['tmp_name'], $path);
-
-                        if ($deu_certo) {
-                            echo ('Deu certo');
-                            $conn->query("UPDATE usuarios SET imagem='$path' WHERE id = $id") or die('Erro: ' . $conn->error);
-                        } else {
-                            echo '<p style="color: red;">Falha ao enviar arquivo</p>';
-                        }
-                    }
-                }
-            } else {
-            }
-        }
-
-        $result = $conn->query('SELECT * FROM usuarios') or die($conn->error);
     }
 }
 
@@ -96,8 +48,8 @@ if (isset($_POST['idStreamer'])) {
 } else {
     header('Location:./index.php');
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -110,14 +62,27 @@ if (isset($_POST['idStreamer'])) {
     <meta name="author" content="">
     <link rel="icon" href="../imagens/Pin-Happy.png">
 
-    <title><?=$streamer['name']?></title>
+    <title><?= $streamer['name'] ?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        .streamerButton {
+            background-color: transparent;
+            padding: 5px 10px !important;
+            border: none;
+            font-size: 15px;
+            margin-top: 10px;
+            margin-bottom: 0px !important;
+        }
+    </style>
 
 </head>
 
@@ -127,7 +92,7 @@ if (isset($_POST['idStreamer'])) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-image: linear-gradient(red, yellow);">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-image: linear-gradient( #F28066, #FEEC32);">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="./index.php">
@@ -146,18 +111,6 @@ if (isset($_POST['idStreamer'])) {
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Lives</span></a>
             </li>
-
-            <style>
-                .streamerButton {
-                    background-color: transparent;
-                    padding: 5px 10px !important;
-                    border: none;
-                    font-size: 15px;
-                    margin-top: 10px;
-                    margin-bottom: 0px !important;
-
-                }
-            </style>
 
             <?php
             //--------------------------------- STREAMERS ONLINE ------------------------------->
@@ -398,7 +351,7 @@ if (isset($_POST['idStreamer'])) {
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                        <?php isset($linha) ? $logado = TRUE : $logado = FALSE; ?>
+                            <?php isset($linha) ? $logado = TRUE : $logado = FALSE; ?>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                 <?php
@@ -452,23 +405,6 @@ if (isset($_POST['idStreamer'])) {
                                         ');
                                 }
                                 ?>
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Configurações
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Lojinha
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Sair
-                                </a> -->
                             </div>
                         </li>
 
@@ -476,27 +412,46 @@ if (isset($_POST['idStreamer'])) {
 
                 </nav>
                 <!-- End of Topbar -->
-                <?php ?>
-                <!-- Begin Page Content -->
-                <div class="container">
-                    <div class="container row">
-                        <div class="col-12">
-                            <img class="d-block mx-auto img-thumbnail" width="200" src="./<?= $streamer['imagem'] ?>" alt="">
-                        </div>
-                    </div>
-                    <div class="container">
-                        <h6 class="display-6">Nome de Usuário</h6>
-                    </div>
-                    <div class="container">
-                        <h4 class="container text-dark display-4"><?= $streamer['name'] ?></h4>
-                    </div>
-                    <div class="container">
-                        <h6 class="display-6">Descrição</h6>
-                    </div>
-                    <div class="container">
-                        <blockquote class="container text-dark blockquote"><?= $streamer['descricao'] ?></blockquote>
+                <style>
+                    .perfil {
+                        display: flex;
+                        align-items: center;
+                        /* border: solid 1px black; */
+                        border-top-right-radius: 10px;
+                        border-top-left-radius: 10px;
+                        margin: 10px;
+                        background-image: linear-gradient(to left, #FEEC32, #F28066);
+                    }
+
+                    .foto-perfil {
+                        width: 150 !important;
+                        height: 150px !important;
+                        border-radius: 50% !important;
+                        /* Bordas arredondadas */
+                        margin-right: 20px !important;
+                        margin-left: 50px !important;
+                        /* Espaçamento entre a imagem e o texto */
+                    }
+                    .nomeStreamer{
+                        color:  #E8E8E8;
+                        font-family:  'Comic Neue';
+                        font-weight: bold;
+                        text-shadow: 2px 2px 4px gray;
+                    }
+
+                    .info {
+                        flex-grow: 1;
+                        /* Expande para ocupar o espaço restante */
+                    }
+                </style>
+                <div class="perfil">
+                    <img class="foto-perfil" src="<?= $streamer['imagem'] ?>" alt="Foto de <?= $streamer['name'] ?>">
+                    <div class="info">
+                        <h1 class="nomeStreamer"><?= $streamer['name'] ?></h1>
+                        <p><?= $streamer['descricao'] ?></p>
                     </div>
                 </div>
+
             </div>
 
 

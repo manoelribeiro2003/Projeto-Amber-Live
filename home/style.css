@@ -1,0 +1,10 @@
+/* Esta parte serve para estilizar os botões dos streamer na navbar esquerda */
+.streamerButton {
+    background-color: transparent;
+    padding: 5px 10px !important;
+    border: none;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 0px !important;
+    text-shadow: 2px 2px 4px rgb(172, 199, 182);
+}

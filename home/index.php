@@ -1,18 +1,21 @@
 <?php
 include_once('./php/conexao.php');
-
 session_start();
+
 if (isset($_SESSION['logado'])) {
 
     if ($_SESSION['logado'] === 'naoEncontrado') {
         $_SESSION['logado'] = FALSE;
         $sql_recomendados = "SELECT * FROM usuarios WHERE status = 1";
         $result_recomendados = $conn->query($sql_recomendados);
+
     } elseif ($_SESSION['logado'] === TRUE) {
         $id = $_SESSION['id'];
+
         $sql = "SELECT * FROM usuarios WHERE id = '$id'";
         $resultado = $conn->query($sql);
         $linha = mysqli_fetch_array($resultado);
+
         $sql_streamers_online = "SELECT * FROM usuarios 
                                 WHERE id IN (SELECT id_seguido FROM seguidores
                                 WHERE id_seguidor = $id) AND status = TRUE;
@@ -23,6 +26,7 @@ if (isset($_SESSION['logado'])) {
                                 ";
         $result_online = $conn->query($sql_streamers_online);
         $result_offline = $conn->query($sql_streamers_offline);
+        
         // while ($linha_streamer_online = mysqli_fetch_assoc($result_online)) {
         //     echo $linha_streamer_online['name'];
         // }
@@ -63,7 +67,7 @@ if (isset($_SESSION['logado'])) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-image: linear-gradient(red, yellow);">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-image: linear-gradient(#F28066, #FEEC32);">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="./index.php">
