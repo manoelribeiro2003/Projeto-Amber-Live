@@ -61,11 +61,14 @@ if (isset($_POST['idStreamer'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../imagens/Pin-Happy.png">
+    <link rel="icon" href="<?=$streamer['imagem']?>" type="image/x-icon">
+
 
     <title><?= $streamer['name'] ?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/612f9a5689.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 
@@ -413,53 +416,226 @@ if (isset($_POST['idStreamer'])) {
                 </nav>
                 <!-- End of Topbar -->
                 <style>
-                    .perfil {
+                    .red {
+                        box-sizing: border-box;
+
                         display: flex;
+                        flex-direction: column;
+                    }
+
+                    .yellow {
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .green {
+                        box-sizing: border-box;
+                        margin: 0px 10px 10px 10px;
+                        padding: 10px 10px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        background-image: linear-gradient(to right, #F28066, #FEEC32);
+                        border-radius: 20px;
+                    }
+
+
+                    .green-info {
+                        background-color: #f28066;
+                        border-radius: 30px;
+                    }
+
+
+                    .orange {
+                        display: flex;
+                        box-sizing: border-box;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                    }
+
+                    .blue {
+                        display: flex;
+                        box-sizing: border-box;
+
+                    }
+
+                    .img-profile {
                         align-items: center;
-                        /* border: solid 1px black; */
-                        border-top-right-radius: 10px;
-                        border-top-left-radius: 10px;
-                        margin: 10px;
-                        background-image: linear-gradient(to left, #FEEC32, #F28066);
+                        width: 150px;
                     }
 
-                    .foto-perfil {
-                        width: 150 !important;
-                        height: 150px !important;
-                        border-radius: 50% !important;
-                        /* Bordas arredondadas */
-                        margin-right: 20px !important;
-                        margin-left: 50px !important;
-                        /* Espaçamento entre a imagem e o texto */
-                    }
-                    .nomeStreamer{
-                        color:  #E8E8E8;
-                        font-family:  'Comic Neue';
+
+                    .name-profile {
+                        font-family: 'Comic Neue', sans-serif;
                         font-weight: bold;
-                        text-shadow: 2px 2px 4px gray;
+                        font-size: 40px;
+                        text-shadow: gray 5px 5px 5px;
+                        color: white;
                     }
 
-                    .info {
-                        flex-grow: 1;
-                        /* Expande para ocupar o espaço restante */
+                    .container-name-profile {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .botoes {
+                        box-sizing: content-box;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-end;
+                    }
+
+                    .btn-live,
+                    .btn-editar {
+                        margin: 5px 5px;
+                        padding: 10px;
+                        border-radius: 4px;
+                        border-style: none;
+                    }
+
+                    .btn-editar {
+                        background-color: cornflowerblue;
+                        color: white;
+                    }
+
+                    .btn-live {
+                        background-color: #ff5555;
+                        color: white;
+                    }
+
+                    .botoes-info,
+                    .botoes-info li {
+                        list-style: none;
+                        display: flex;
+                        flex-direction: row;
+                    }
+
+                    .botoes-info li {
+                        margin-right: 20px;
+                        margin-left: 20px;
+                    }
+
+                    .botoes-info li a {
+                        text-decoration: none;
+                        color: white;
+                        font-family: 'Comic Neue', sans-serif;
+                        font-weight: bold;
+                        text-decoration: none;
+                    }
+
+                    .botoes-info li:last-child {
+                        margin-right: 0px;
+                    }
+
+                    .botoes-info li:first-child {
+                        margin-left: 30px;
+                    }
+
+                    @media(max-width:940px) {
+
+                        .botoes {
+                            flex-wrap: wrap;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-end;
+                            align-content: center;
+                            margin: 0, 0;
+                            padding: 0, 0;
+                        }
+                    }
+
+                    @media(max-width:870px) {
+
+                        .orange {
+                            flex-direction: column;
+                        }
+
+                        .botoes {
+                            flex-wrap: wrap;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-end;
+                            align-content: center;
+                            margin: 0, 0;
+                            padding: 0, 0;
+                        }
+                    }
+
+                    .yellow-conteudo {
+                        display: flex;
+                        padding: 20px;
+                        border: 1px solid black;
+                        margin: 15px 15px;
+                        border-radius: 20px;
+                        background-color: lightyellow;
                     }
                 </style>
-                <div class="perfil">
-                    <img class="foto-perfil" src="<?= $streamer['imagem'] ?>" alt="Foto de <?= $streamer['name'] ?>">
-                    <div class="info">
-                        <h1 class="nomeStreamer"><?= $streamer['name'] ?></h1>
-                        <p><?= $streamer['descricao'] ?></p>
+
+                <div class="red">
+
+                    <div class="yellow">
+                        <div class="green">
+                            <div class="orange info-perfil">
+                                <div class="blue">
+                                    <img class="img-profile" src="<?= $streamer['imagem'] ?>" alt="Imagem de <?= $streamer['name'] ?>">
+                                </div>
+                                <div class="blue container-name-profile">
+                                    <span class="name-profile"><?= $streamer['name'] ?></span>
+                                </div>
+                            </div>
+                            <div class="orange botoes">
+                                <div class="blue">
+                                    <button class="btn-live">
+                                        <i class="fa fa-pen"></i>
+                                        Mensagem
+                                    </button>
+                                </div>
+                                <div class="blue">
+                                    <button id="" class="btn-editar" onclick="abrirModalEditar(<?= $streamer['id'] ?>)">
+                                        <?php
+                                            $sql_seguir = "SELECT * from seguidores                                                                                                                                     
+                                            WHERE id_seguidor = $linha[id] AND id_seguido = $streamer[id];";
+
+                                            $result_seguir = $conn->query($sql_seguir);
+                                            $res_assc_seguir = mysqli_fetch_assoc($result_seguir);
+                                            if ($res_assc_seguir['id_seguidor'] == $linha['id'] AND $res_assc_seguir['id_seguido'] == $streamer['id']) {
+                                                echo("
+                                                <i class='fa fa-heart-crack'></i>
+                                                Deixar de seguir");
+                                            }else{
+                                                echo("
+                                                <i class='fa fa-heart'></i>
+                                                Seguir");
+                                            }
+                                        ?>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="green green-info">
+                            <nav class="botoes-info">
+                                <li class="btn-inicio"><a href="#">Início</a></li>
+                                <li class="btn-sobre"><a href="#">Sobre</a></li>
+                                <li class="btn-videos"><a href="#">Vídeos</a></li>
+                            </nav>
+                        </div>
+                    </div>
+
+
+                    <div class="yellow">
+                        <div class="yellow-conteudo">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque aut itaque possimus culpa numquam adipisci deleniti, vero impedit veniam quos sequi totam eos incidunt necessitatibus voluptatem in at exercitationem corrupti.</div>
                     </div>
                 </div>
 
+
+
             </div>
 
-
-
         </div>
-
-    </div>
-    <!-- End of Content Wrapper -->
+        <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->

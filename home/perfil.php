@@ -124,12 +124,14 @@ if (isset($_POST['idEntrarAoVivo'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../imagens/Pin-Happy.png">
+    <link rel="icon" href="<?=$linha['imagem']?>" type="image/x-icon">
 
     <title><?= $linha['name'] ?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Custom styles for this template-->
@@ -447,47 +449,295 @@ if (isset($_POST['idEntrarAoVivo'])) {
                 <!-- End of Topbar -->
 
 
-                <!-- Begin Page Content -->
+                <!-- Begin Page Content of Streamer Perfil-->
                 <style>
-                    .perfil {
+                    .red {
+                        box-sizing: border-box;
+
                         display: flex;
+                        flex-direction: column;
+                    }
+
+                    .yellow {
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .green {
+                        box-sizing: border-box;
+                        margin: 0px 10px 10px 10px;
+                        padding: 10px 10px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        background-image: linear-gradient(to right, #F28066, #FEEC32);
+                        border-radius: 20px;
+                    }
+
+
+                    .green-info {
+                        background-color: #f28066;
+                        border-radius: 30px;
+                    }
+
+
+                    .orange {
+                        display: flex;
+                        box-sizing: border-box;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                    }
+
+                    .blue {
+                        display: flex;
+                        box-sizing: border-box;
+
+                    }
+
+                    .img-profile {
                         align-items: center;
+                        width: 150px;
                     }
 
-                    .foto-perfil {
-                        width: 150 !important;
-                        height: 150px !important;
-                        border-radius: 50% !important;
-                        /* Bordas arredondadas */
-                        margin-right: 20px !important;
-                        margin-left: 50px !important;
-                        /* Espaçamento entre a imagem e o texto */
+
+                    .name-profile {
+                        font-family: 'Comic Neue', sans-serif;
+                        font-weight: bold;
+                        font-size: 40px;
+                        text-shadow: gray 5px 5px 5px;
+                        color: white;
                     }
 
-                    .info {
-                        flex-grow: 1;
-                        /* Expande para ocupar o espaço restante */
+                    .container-name-profile {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .botoes {
+                        box-sizing: content-box;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-end;
+                    }
+
+                    .btn-live,
+                    .btn-editar {
+                        margin: 5px 5px;
+                        padding: 10px;
+                        border-radius: 4px;
+                        border-style: none;
+                    }
+
+                    .btn-editar {
+                        background-color: cornflowerblue;
+                        color: white;
+                    }
+
+                    .btn-live {
+                        background-color: #ff5555;
+                        color: white;
+                    }
+
+                    .botoes-info,
+                    .botoes-info li {
+                        list-style: none;
+                        display: flex;
+                        flex-direction: row;
+                    }
+
+                    .botoes-info li {
+                        margin-right: 20px;
+                        margin-left: 20px;
+                    }
+
+                    .botoes-info li a {
+                        text-decoration: none;
+                        color: white;
+                        font-family: 'Comic Neue', sans-serif;
+                        font-weight: bold;
+                        text-decoration: none;
+                    }
+
+                    .botoes-info li:last-child {
+                        margin-right: 0px;
+                    }
+
+                    .botoes-info li:first-child {
+                        margin-left: 30px;
+                    }
+
+                    @media(max-width:940px) {
+
+                        .botoes {
+                            flex-wrap: wrap;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-end;
+                            align-content: center;
+                            margin: 0, 0;
+                            padding: 0, 0;
+                        }
+                    }
+
+                    @media(max-width:870px) {
+
+                        .orange {
+                            flex-direction: column;
+                        }
+
+                        .botoes {
+                            flex-wrap: wrap;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-end;
+                            align-content: center;
+                            margin: 0, 0;
+                            padding: 0, 0;
+                        }
+                    }
+
+                    .yellow-conteudo {
+                        display: flex;
+                        padding: 20px;
+                        border: 1px solid black;
+                        margin: 15px 15px;
+                        border-radius: 20px;
+                        background-color: lightyellow;
                     }
                 </style>
-                <div class="perfil">
-                    <img class="foto-perfil" src="<?= $linha['imagem'] ?>" alt="Foto de Perfil">
-                    <div class="info">
-                        <h1><?= $linha['name'] ?></h1>
-                        <p><?= $linha['descricao'] ?></p>
+
+                <div class="red">
+
+                    <div class="yellow">
+                        <div class="green">
+                            <div class="orange info-perfil">
+                                <div class="blue">
+                                    <img class="img-profile" src="<?= $linha['imagem'] ?>" alt="Imagem de <?= $linha['name'] ?>">
+                                </div>
+                                <div class="blue container-name-profile">
+                                    <span class="name-profile"><?= $linha['name'] ?></span>
+                                </div>
+                            </div>
+                            <div class="orange botoes">
+                                <div class="blue">
+                                    <button class="btn-live">
+                                        <i class="fa fa-play"></i>
+                                        Live!
+                                    </button>
+                                </div>
+                                <div class="blue">
+                                    <button id="" class="btn-editar" onclick="abrirModalEditar(<?= $linha['id'] ?>)">
+                                        <i class='fa fa-edit'></i>
+                                        Editar Perfil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="green green-info">
+                            <nav class="botoes-info">
+                                <li class="btn-inicio"><a href="#">Início</a></li>
+                                <li class="btn-sobre"><a href="#">Sobre</a></li>
+                                <li class="btn-videos"><a href="#">Vídeos</a></li>
+                            </nav>
+                        </div>
+                    </div>
+
+
+                    <div class="yellow">
+                        <div class="yellow-conteudo">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque aut itaque possimus culpa numquam adipisci deleniti, vero impedit veniam quos sequi totam eos incidunt necessitatibus voluptatem in at exercitationem corrupti.</div>
                     </div>
                 </div>
 
-
-
-
-                <!-- End Page Content -->
-
-
+                <!-- End Page Content of Streamer Perfil-->
 
             </div>
 
-            <!----------------- Modal Editar --------------->
+            <!----------------- Start Modal Editar --------------->
+            <style>
+                /*Propriedades do botao editar imagem*/
+                input[type="file"] {
+                    display: none;
+                }
+
+                .custom-file-upload {
+                    border: 1px solid #ccc;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    cursor: pointer;
+                    border-radius: 100px;
+                    transition: transform 0.3s ease;
+                    background-color: white;
+                }
+
+                .custom-file-upload:hover {
+                    transform: scale(1.1);
+                }
+
+                #container-botao {
+                    position: absolute;
+                    width: fit-content;
+                    box-sizing: content-box;
+                    /* overflow: hidden; */
+                    top: 68%;
+                    left: 72%;
+                    z-index: 2;
+                }
+
+                .cont-img-modal {
+                    z-index: 1;
+                    width: fit-content;
+                    position: relative;
+                }
+
+                #file-upload {
+                    color: white;
+                }
+            </style>
+            <div class="modal fade" id='modalEditar' tabindex="-1" role="dialog" aria-label="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <form enctype="multipart/form-data" action="./perfil.php" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Editar Perfil</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+
+                                    <div class="blue cont-img-modal">
+                                        <div id="container-botao">
+                                            <label for="file-upload" class="custom-file-upload">
+                                                <i class="fa fa-pencil"></i>
+                                            </label>
+                                            <input name="arquivo" id="file-upload" type="file" />
+                                        </div>
+                                        <img class="img-profile" src="<?= $linha['imagem'] ?>" alt="Imagem de <?= $linha['name'] ?>">
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <label>Nome de Usuário</label>
+                                    <input type="text" id="editarName" name="nomeUsuario" class="form-control" value="<?= $linha['name'] ?>">
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <label>Descrição</label>
+                                    <textarea name="descricao" id="editarDescricao" cols="30" rows="5" class="form-control"><?= $linha['descricao'] ?></textarea>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type='hidden' name='editar' value='editar'></input>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick="fecharModalEditar()">Fechar</button>
+                                    <input type="submit" class="btn btn-primary" value="Editar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!----------------- End Modal Editar --------------->
 
     </div>
     <!-- End of Content Wrapper -->
